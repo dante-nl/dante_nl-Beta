@@ -77,7 +77,9 @@
 				} if (img == null || img == "") {
 					document.getElementById('error5').innerHTML = `<p style="color: #ff2d55;">Please upload an icon!</p>`
 				} else {
-					document.getElementById('error5').innerHTML = `` 
+					document.getElementById('error5').innerHTML = ``
+					img.height = 120;
+					img.width = 120;
 				} if (url == null || url == "") {
 					document.getElementById('error3').innerHTML = `<p style="color: #ff2d55;">Please enter a URL!</p>`
 				} else {
