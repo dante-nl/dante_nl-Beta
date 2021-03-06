@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>.mobileconfig generator</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="mobileconfig, ios profile, ios profile generator">
+	<meta name="description" content="Add a website to your iOS homepage with this .mobileconfig generator!">
+	<meta name="author" content="Made by dante_nl">
+	<script>
+				function is_url(str) {
+						regexp = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
+						if (regexp.test(str)) {
+							return "yes";
+						}
+						else {
+							return "no";
+						}
+					}
+
+			function encodeImageFileAsURL(element) {
+					var file = element.files[0];
+					var reader = new FileReader();
+					reader.onloadend = function () {
+						imgb64 = reader.result.replace("data:image/png;base64,", "");
+						console.log(imgb64)
+					}
+					reader.readAsDataURL(file);
+				}
+	</script>
+</head>
+
+<body>
+
+	<h1>Generate a mobileconfig</h1>
+	<form action="javascript:submit()">
+		<label for="name">Name for your profile:</label>
+		<input type="text" id="name" name="name"><br>
+		<p id="error1"></p>
+		<label for="author">What author do you want:</label>
+		<input type="text" id="author" name="author"><br>
+		<p id="error2"></p>
+		<label for="url">URL that it should open:</label>
+		<input type="text" id="url" name="url"><br>
+		<p id="error3"></p>
+		<label for="msg">The message you want:</label>
+		<input type="text" id="msg" name="message"><br>
+		<p id="error4"></p>
+		<label for="img">Icon you want:</label>
+		<input type="file" id="img" name="img" onchange="encodeImageFileAsURL(this)" accept="image/*">
+		<p id="error5"></p>
+		<input type="submit" value="Start the generation!">
+	</form>
+	<h1 id="tempresult"></h1>
+	<h1 id="tempresult2"></h1>
+
+	<script>
+		function submit() {
+				var random = Math.floor(Math.random() * 10000000) + 1000;
+				var name = document.getElementById("name").value
+				var author = document.getElementById("author").value
+				var url = document.getElementById("url").value
+				var msg = document.getElementById("msg").value
+				var img = document.getElementById("img").value
+				if (name == null || name == "") {
+					document.getElementById('error1').innerHTML = `<p style="color: #ff2d55;">Please enter a name!</p>`
+				} else {
+					document.getElementById('error1').innerHTML = ``
+				} if (author == null || author == "") {
+					document.getElementById('error2').innerHTML = `<p style="color: #ff2d55;">Please enter an author!</p>`
+				} else {
+					document.getElementById('error2').innerHTML = ``
+				} if (msg == null || msg == "") {
+					document.getElementById('error4').innerHTML = `<p style="color: #ff2d55;">Please enter a message!</p>`
+				} else {
+					document.getElementById('error4').innerHTML = ``
+				} if (img == null || img == "") {
+					document.getElementById('error5').innerHTML = `<p style="color: #ff2d55;">Please upload an icon!</p>`
+				} else {
+					document.getElementById('error5').innerHTML = `` 
+				} if (url == null || url == "") {
+					document.getElementById('error3').innerHTML = `<p style="color: #ff2d55;">Please enter a URL!</p>`
+				} else {
+					if (is_url(url) == "no") {
+						document.getElementById('error3').innerHTML = `<p style="color: #ff2d55;">Please enter a valid URL!</p>`
+					} else {
+						document.getElementById('error3').innerHTML = ``
+						document.getElementById('tempresult').innerHTML = `everything works yay`
+						download(`${name}.mobileconfig`, `
+<!--Generated with the mobileconfig generator by dante_nl-->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>ConsentText</key>
+		<dict>
+			<key>default</key>
+			<string>${msg}</string>
+		</dict>
+		<key>PayloadContent</key>
+		<array>
+			<dict>
+				<key>FullScreen</key>
+				<true/>
+				<key>Icon</key>
+				<data>${imgb64}</data>
+				<key>IsRemovable</key>
+				<true/>
+				<key>Label</key>
+				<string>${name}</string>
+				<key>PayloadDescription</key>
+				<string>Add ${url} to your homescreen. Made using the .mobileconfig generator [BETA]</string>
+				<key>PayloadDisplayName</key>
+				<string>${name}</string>
+				<key>PayloadIdentifier</key>
+				<string>${author}</string>
+				<key>PayloadOrganization</key>
+				<string>${author}</string>
+				<key>PayloadType</key>
+				<string>com.apple.webClip.managed</string>
+				<key>PayloadUUID</key>
+				<string>c3b2c123-6253-464e-afde-0d987400da0f</string>
+				<key>PayloadVersion</key>
+				<integer>1</integer>
+				<key>Precomposed</key>
+				<false/>
+				<key>URL</key>
+				<string>${url}</string>
+			</dict>
+		</array>
+		<key>PayloadDescription</key>
+		<string>Add ${url} to your homescreen thru the use of a profile</string>
+		<key>PayloadDisplayName</key>
+		<string>${name}</string>
+		<key>PayloadIdentifier</key>
+		<string>${author}</string>
+		<key>PayloadOrganization</key>
+		<string>${author}</string>
+		<key>PayloadRemovalDisallowed</key>
+		<false/>
+		<key>PayloadType</key>
+		<string>Configuration</string>
+		<key>PayloadUUID</key>
+		<string>${random}</string>
+		<key>PayloadVersion</key>
+		<integer>1</integer>
+	</dict>
+</plist>						`);
+					}
+				}
+			}
+
+		function download(filename, text) {
+				var element = document.createElement('a');
+				element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+				element.setAttribute('download', filename);
+
+				element.style.display = 'none';
+				document.body.appendChild(element);
+
+				element.click();
+
+				document.body.removeChild(element);
+			}
+	</script>
+
+</body>
+
+</html>
