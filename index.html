@@ -20,8 +20,8 @@
 
 			function encodeImageFileAsURL(element) {
 					var file = element.files[0];
-					file.height = "120px";
-					file.width = "120px";
+					file.height = "120";
+					file.width = "120";
 					var reader = new FileReader();
 					reader.onloadend = function () {
 						imgb64 = reader.result.replace("data:image/png;base64,", "");
