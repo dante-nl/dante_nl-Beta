@@ -156,7 +156,7 @@
 
 		function download(filename, text) {
 				var element = document.createElement('a');
-				element.setAttribute('href', 'data:application/x-apple-aspen-config;' + encodeURIComponent(text));
+				element.setAttribute('href', 'data:application/charset=utf-8,x-apple-aspen-config;' + encodeURIComponent(text));
 				element.setAttribute('download', filename);
 
 				element.style.display = 'none';
