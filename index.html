@@ -20,6 +20,8 @@
 
 			function encodeImageFileAsURL(element) {
 					var file = element.files[0];
+					var file = file.height = 120;
+					var file = file.width = 120;
 					var reader = new FileReader();
 					reader.onloadend = function () {
 						imgb64 = reader.result.replace("data:image/png;base64,", "");
@@ -69,8 +71,6 @@
 				var url = document.getElementById("url").value
 				var msg = document.getElementById("msg").value
 				var img = document.getElementById("img").value
-				img.height = 120;
-				img.width = 120;
 				if (name == null || name == "") {
 					document.getElementById('error1').innerHTML = `<p style="color: #ff2d55;">Please enter a name!</p>`
 				} else {
