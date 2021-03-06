@@ -86,7 +86,7 @@
 					} else {
 						document.getElementById('error3').innerHTML = ``
 						document.getElementById('tempresult').innerHTML = `everything works yay`
-						download(`${name}.mobileconfig`, `
+						var profileraw = `
 <!--Generated with the mobileconfig generator by dante_nl-->
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -146,7 +146,10 @@
 		<key>PayloadVersion</key>
 		<integer>1</integer>
 	</dict>
-</plist>						`);
+</plist>						`
+						profileb64 = window.btoa(profileraw);
+						console.log("PROFILE IN B64: ", profileb64)
+						download(`${name}.mobileconfig`, profileb64);
 					}
 				}
 			}
