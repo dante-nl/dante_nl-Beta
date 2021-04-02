@@ -2,181 +2,145 @@
 <html>
 
 <head>
-	<title>.mobileconfig generator</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="keywords" content="mobileconfig, ios profile, ios profile generator">
-	<meta name="description" content="Add a website to your iOS homepage with this .mobileconfig generator!">
-	<meta name="author" content="Made by dante_nl">
+	<meta charset="utf-8">
+	<title>QR It! &mdash; dante_nl Apps</title>
+
+	<script type="text/javascript" src="https://cdn.dantenl.tk/qrcode.min.js"></script>
+
 	<script>
-				function is_url(str) {
-						regexp = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
-						if (regexp.test(str)) {
-							return "yes";
-						}
-						else {
-							return "no";
-						}
-					}
+		function getDomain(url, subdomain) {
+				subdomain = subdomain || false;
 
-			function encodeImageFileAsURL(element) {
-					var file = element.files[0];
-					file.height = "120";
-					file.width = "120";
-					var reader = new FileReader();
-					reader.onloadend = function () {
-						imgb64 = reader.result.replace("data:image/png;base64,", "");
-						console.log(imgb64)
-					}
-					reader.readAsDataURL(file);
+				url = url.replace(/(https?:\/\/)?(www.)?/i, '');
+
+				if (!subdomain) {
+					url = url.split('.');
+
+					url = url.slice(url.length - 2).join('.');
 				}
 
-			function uuidv4() {
-					return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-						var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-						return v.toString(16);
-					});
+				if (url.indexOf('/') !== -1) {
+					return url.split('/')[0];
 				}
+
+				return url;
+			}
+		
+		function is_url(str) {
+			regexp = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
+			if (regexp.test(str)) {
+				return "yes";
+			}
+			else {
+				return "no";
+			}
+		}
+
+		vURLs = ["dantenl.tk", "google.com", "youtube.com", "youtu.be"]
+		console.log(vURLs)
 	</script>
+
+	<style>
+		body {
+			background-color: #141414;
+			color: white;
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		}
+
+		input {
+			border: 3px solid #003B7A;
+			border-radius: 8px;
+			background: none;
+			color: white;
+			width: 300px;
+		}
+
+		#submit {
+			border: 3px solid #003B7A;
+			border-radius: 8px;
+			background: #003B7A;
+			color: white;
+			width: 100px;
+			height: 30px;
+			-webkit-appearance: none;
+   			-moz-appearance: none;
+   			appearance: none;  
+		}
+
+		#submit:hover,
+		#submit:active {
+			background-color: #1a4f87;
+			border: #1a4f87
+		}
+
+		#qrcode {
+			border-radius: 8px;
+			border: 3px solid #003B7A;
+			height: 200px;
+			width: 200px;
+			padding: 5px;
+			background: #ffffff
+		}
+	</style>
 </head>
 
 <body>
 
-	<h1>Generate a mobileconfig</h1>
-	<form action="javascript:submit()">
-		<label for="name">Name for your profile:</label>
-		<input type="text" id="name" name="name"><br>
-		<p id="error1"></p>
-		<label for="author">What author do you want:</label>
-		<input type="text" id="author" name="author"><br>
-		<p id="error2"></p>
-		<label for="url">URL that it should open:</label>
-		<input type="text" id="url" name="url"><br>
-		<p id="error3"></p>
-		<label for="msg">The message you want:</label>
-		<input type="text" id="msg" name="message"><br>
-		<p id="error4"></p>
-		<label for="img">Icon you want:</label>
-		<input type="file" id="img" name="img" onchange="encodeImageFileAsURL(this)" accept="image/*">
-		<p id="error5"></p>
-		<input type="submit" value="Start the generation!">
+	<h1>QR It!</h1>
+	<p>Generate a QR code from a cool link!</p>
+
+	<form action="javascript:validate()">
+		<label for="qrlink">QR Code link:</label>
+		<input type="text" id="qrlink" name="qrlink"><br>
+		<p id="error"></p>
+		<input type="submit" value="QR It!" id="submit">
 	</form>
-	<h1 id="tempresult"></h1>
-	<h1 id="tempresult2"></h1>
-
+	<br>
+	<div id="note"></div>
+	<div id="qrcode"><h2 style="color:black;">Start by entering a URL and clicking "QR It!"</h2></div>
 	<script>
-		function submit() {
-				var uuid = uuidv4()
-				var name = document.getElementById("name").value
-				var author = document.getElementById("author").value
-				var url = document.getElementById("url").value
-				var msg = document.getElementById("msg").value
-				var img = document.getElementById("img").value
-				if (name == null || name == "") {
-					document.getElementById('error1').innerHTML = `<p style="color: #ff2d55;">Please enter a name!</p>`
-				} else {
-					document.getElementById('error1').innerHTML = ``
-				} if (author == null || author == "") {
-					document.getElementById('error2').innerHTML = `<p style="color: #ff2d55;">Please enter an author!</p>`
-				} else {
-					document.getElementById('error2').innerHTML = ``
-				} if (msg == null || msg == "") {
-					document.getElementById('error4').innerHTML = `<p style="color: #ff2d55;">Please enter a message!</p>`
-				} else {
-					document.getElementById('error4').innerHTML = ``
-				} if (img == null || img == "") {
-					document.getElementById('error5').innerHTML = `<p style="color: #ff2d55;">Please upload an icon!</p>`
-				} else {
-					document.getElementById('error5').innerHTML = ``
-				} if (url == null || url == "") {
-					document.getElementById('error3').innerHTML = `<p style="color: #ff2d55;">Please enter a URL!</p>`
-				} else {
-					if (is_url(url) == "no") {
-						document.getElementById('error3').innerHTML = `<p style="color: #ff2d55;">Please enter a valid URL!</p>`
-					} else {
-						document.getElementById('error3').innerHTML = ``
-						document.getElementById('tempresult').innerHTML = `everything works yay`
-						var profileraw = `
-<!--Generated with the mobileconfig generator by dante_nl-->
+		function validate() {
+			var QRL1 = document.getElementById("qrlink").value
+			console.log(QRL1)
 
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-	<dict>
-		<key>ConsentText</key>
-		<dict>
-			<key>default</key>
-			<string>${msg}</string>
-		</dict>
-		<key>PayloadContent</key>
-		<array>
-			<dict>
-				<key>FullScreen</key>
-				<true/>
-				<key>Icon</key>
-				<data>${imgb64}</data>
-				<key>IsRemovable</key>
-				<true/>
-				<key>Label</key>
-				<string>${name}</string>
-				<key>PayloadDescription</key>
-				<string>Add ${url} to your homescreen. Made using the .mobileconfig generator [BETA]</string>
-				<key>PayloadDisplayName</key>
-				<string>${name}</string>
-				<key>PayloadIdentifier</key>
-				<string>${author}</string>
-				<key>PayloadOrganization</key>
-				<string>${author}</string>
-				<key>PayloadType</key>
-				<string>com.apple.webClip.managed</string>
-				<key>PayloadUUID</key>
-				<string>${uuid}</string>
-				<key>PayloadVersion</key>
-				<integer>1</integer>
-				<key>Precomposed</key>
-				<false/>
-				<key>URL</key>
-				<string>${url}</string>
-			</dict>
-		</array>
-		<key>PayloadDescription</key>
-		<string>Add ${url} to your homescreen thru the use of a profile</string>
-		<key>PayloadDisplayName</key>
-		<string>${name}</string>
-		<key>PayloadIdentifier</key>
-		<string>${author}</string>
-		<key>PayloadOrganization</key>
-		<string>${author}</string>
-		<key>PayloadRemovalDisallowed</key>
-		<false/>
-		<key>PayloadType</key>
-		<string>Configuration</string>
-		<key>PayloadUUID</key>
-		<string>${uuid}</string>
-		<key>PayloadVersion</key>
-		<integer>1</integer>
-	</dict>
-</plist>						`
-						profileb64 = window.btoa(profileraw);
-						console.log("PROFILE IN B64: ", profileb64)
-						download(`${name}.mobileconfig`, profileb64);
-					}
+
+			if(QRL1==null || QRL1=="") {
+				document.getElementById("error").innerHTML = '<p style="color: #ff3b30;">Please enter a valid URL!</p>'
+			} else if(is_url(QRL1)=="no") {
+				document.getElementById("error").innerHTML = '<p style="color: #ff3b30;">Please enter a valid URL!</p>'
+			} else {
+				var QRL = getDomain(QRL1)
+				console.log(QRL)
+				document.getElementById("error").innerHTML = ''
+				document.getElementById("qrcode").innerHTML = ''
+				document.getElementById("note").innerHTML = '<p style="color: #4cd964;"><strong>This URL is verified.</strong> This URL has been verified and is proven to not do any harm. The user will not get any alert.</p>'
+				if(vURLs.indexOf(QRL)>-1) {
+					new QRCode(document.getElementById("qrcode"), {
+						text: QRL1,
+						width: 200,
+						height: 200,
+						colorDark: "#000000",
+						colorLight: "#ffffff",
+						correctLevel: QRCode.CorrectLevel.H
+					});
+				} else {
+					var QRL = getDomain(QRL1)
+					console.log(QRL)
+					document.getElementById("error").innerHTML = ''
+					document.getElementById("qrcode").innerHTML = ''
+					document.getElementById("note").innerHTML = '<p style="color: #ff9500;"><strong>This URL is not verified.</strong> This URL has not been verified. The user will get an alert. If you are the owner of this website, please contact me <a href="mailto:dante_nl@icloud.com?subject=Contact QR It!" style="color:#ff9500;">via e-mail</a></p>'
+					new QRCode(document.getElementById("qrcode"), {
+						text: `https://apps.dantenl.tk/qrit/open-url?url=${QRL1}`,
+						width: 200,
+						height: 200,
+						colorDark: "#000000",
+						colorLight: "#ffffff",
+						correctLevel: QRCode.CorrectLevel.H
+					});
 				}
 			}
-
-		function download(filename, text) {
-				var element = document.createElement('a');
-				element.setAttribute('href', 'data:application/x-apple-aspen-config;charset=utf-8;base64,' + encodeURIComponent(text));
-				element.setAttribute('download', filename);
-
-				element.style.display = 'none';
-				document.body.appendChild(element);
-
-				element.click();
-
-				document.body.removeChild(element);
-			}
+		}
 	</script>
-
 </body>
 
 </html>
