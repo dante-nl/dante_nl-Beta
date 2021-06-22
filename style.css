@@ -1,0 +1,59 @@
+/* ⬇️ Design */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+@media(prefers-color-scheme: dark) {
+	body {
+		background-color: #1a1a1a;
+		color: #fff
+	}
+}
+
+body {
+	background-color: #e6e6e6;
+	color: #000;
+	font-family: 'Open Sans', sans-serif;
+
+}
+
+ a {
+	color: #7289da;
+	text-decoration: none;
+ }
+
+ a:hover {
+	text-decoration: underline;
+ }
+
+ .dante_nl {
+	background: #7289DA;
+	background: -webkit-linear-gradient(to right, #7289DA 0%, #5865f2 100%);
+	background: -moz-linear-gradient(to right, #7289DA 0%, #5865f2 100%);
+	background: linear-gradient(to right, #7289DA 0%, #5865f2 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+ }
+
+/* ⬇️ Layout */
+
+ .split {
+	height: 100%;
+	width: 50%;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	overflow-x: hidden;
+	padding-top: 20px;
+}
+
+.left {
+	left: 0;
+	text-align: left;
+}
+
+.right {
+	right: 0;
+	text-align: right;
+	border-left: 3px solid  #7289DA;
+}
