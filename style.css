@@ -4,8 +4,8 @@
 
 @media(prefers-color-scheme: dark) {
 	body {
-		background-color: #1a1a1a;
-		color: #fff
+		background-color: #1a1a1a !important;
+		color: #fff !important;
 	}
 }
 
@@ -42,6 +42,77 @@ body {
 	border-radius: 8px;
  }
 
+ .discordcopy {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px 24px;
+    border-radius: 8px;
+    background: #7289DA;
+	background: -webkit-linear-gradient(to right, #7289DA 0%, #5865f2 100%);
+	background: -moz-linear-gradient(to right, #7289DA 0%, #5865f2 100%);
+	background: linear-gradient(to right, #7289DA 0%, #5865f2 100%);
+    color: #ffffff;
+    text-decoration: none;
+	margin-left: 5px;
+}
+.discordcopy:hover,
+.discordcopy:focus {
+    background: #8095de;
+	background: -webkit-linear-gradient(to right, #8095de 0%, #6974f3 100%);
+	background: -moz-linear-gradient(to right, #8095de 0%, #6974f3 100%);
+	background: linear-gradient(to right, #8095de 0%, #6974f3 100%);
+    color: #ffffff;
+    text-decoration: none;
+}
+
+ .discordjoin {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px 24px;
+    border-radius: 8px;
+    background: #3ba55d;
+	background: -webkit-linear-gradient(to right, #3ba55d 0%, #359554 100%);
+	background: -moz-linear-gradient(to right, #3ba55d 0%, #359554 100%);
+	background: linear-gradient(to right, #3ba55d 0%, #359554 100%);
+    color: #ffffff;
+    text-decoration: none;
+	margin-left: 5px;
+}
+.discordjoin:hover,
+.discordjoin:focus {
+    background: #62b77d;
+	background: -webkit-linear-gradient(to right, #62b77d 0%, #4fae6d 100%);
+	background: -moz-linear-gradient(to right, #62b77d 0%, #4fae6d 100%);
+	background: linear-gradient(to right, #62b77d 0%, #4fae6d 100%);
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.rhbutton {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px 24px;
+    border-radius: 8px;
+    background: #4ea699;
+	background: -webkit-linear-gradient(to right, #4ea699 0%, #346f66 100%);
+	background: -moz-linear-gradient(to right, #4ea699 0%, #346f66 100%);
+	background: linear-gradient(to right, #4ea699 0%, #346f66 100%);
+    color: #ffffff;
+    text-decoration: none;
+	margin-left: 5px;
+}
+.rhbutton:hover,
+.rhbuttonn:focus {
+    background: #60afa3;
+	background: -webkit-linear-gradient(to right, #60afa3 0%, #487d75 100%);
+	background: -moz-linear-gradient(to right, #60afa3 0%, #487d75 100%);
+	background: linear-gradient(to right, #60afa3 0%, #487d75 100%);
+    color: #ffffff;
+    text-decoration: none;
+}
 /* ⬇️ Layout */
 
  .split {
