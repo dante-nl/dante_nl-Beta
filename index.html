@@ -2,147 +2,53 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<title>QR It! &mdash; dante_nl Apps</title>
+	<title>dante_nl (Beta)</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<script type="text/javascript" src="https://cdn.dantenl.tk/qrcode.min.js"></script>
-
+	<meta property="og:title" content="dante_nl" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://dantenl.tk" />
+	<meta property="og:image" content="https://dantenl.tk/goodwumpus.png" />
+	<meta property="og:description"
+		content="Here you can open links to other websites like my RoutineHub (rhub.tk?u=dante_nl) or my Discord (/discord). Now all with a fresh new design!" />
+	<meta property="theme-color" content="#7289DA" />
+	<link rel="stylesheet" href="style.css" />
 	<script>
-		function getDomain(url, subdomain) {
-				subdomain = subdomain || false;
-
-				url = url.replace(/(https?:\/\/)?(www.)?/i, '');
-
-				if (!subdomain) {
-					url = url.split('.');
-
-					url = url.slice(url.length - 2).join('.');
-				}
-
-				if (url.indexOf('/') !== -1) {
-					return url.split('/')[0];
-				}
-
-				return url;
-			}
-		
-		function is_url(str) {
-			regexp = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
-			if (regexp.test(str)) {
-				return "yes";
-			}
-			else {
-				return "no";
-			}
-		}
-
-		vURLs = ["dantenl.tk", "google.com", "youtube.com", "youtu.be"]
-		console.log(vURLs)
-	</script>
-
-	<style>
-		body {
-			background-color: #141414;
-			color: white;
-			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-		}
-
-		input {
-			border: 3px solid #003B7A;
-			border-radius: 8px;
-			background: none;
-			color: white;
-			width: 300px;
-		}
-
-		#submit {
-			border: 3px solid #003B7A;
-			border-radius: 8px;
-			background: #003B7A;
-			color: white;
-			width: 100px;
-			height: 30px;
-			-webkit-appearance: none;
-   			-moz-appearance: none;
-   			appearance: none;  
-		}
-
-		#submit:hover,
-		#submit:active {
-			background-color: #1a4f87;
-			border: #1a4f87
-		}
-
-		#qrcode {
-			border-radius: 8px;
-			border: 3px solid #003B7A;
-			height: 200px;
-			width: 200px;
-			padding: 5px;
-			background: #ffffff
-		}
-	</style>
-</head>
-
-<body>
-
-	<h1>QR It!</h1>
-	<h2>Generate a QR code from a URL!</h2>
-	<p>With QR It!, you can easily generate a QR code for yourself or others to scan! Some URLs are verified. This means the URL will be opened instantly when the code is scanned without an prompt for the user to press "OK" to. You can save the QR codes!</p>
-
-	<form action="javascript:validate()">
-		<label for="qrlink">QR Code link:</label>
-		<input type="text" id="qrlink" name="qrlink"><br>
-		<p id="error"></p>
-		<input type="submit" value="QR It!" id="submit">
-	</form>
-	<br>
-	<div id="note"></div>
-	<div id="qrcode"><h2 style="color:black;">Start by entering a URL and clicking "QR It!"</h2></div>
-	<script>
-		function validate() {
-			var QRL1 = document.getElementById("qrlink").value
-			console.log(QRL1)
-
-
-			if(QRL1==null || QRL1=="") {
-				document.getElementById("error").innerHTML = '<p style="color: #ff3b30;">Please enter a valid URL!</p>'
-			} else if(is_url(QRL1)=="no") {
-				document.getElementById("error").innerHTML = '<p style="color: #ff3b30;">Please enter a valid URL!</p>'
+		if (screen.width <= 699) { 
+			if(window.location.pathname == "/mobile.html") {
+				break
 			} else {
-				var QRL = getDomain(QRL1)
-				console.log(QRL)
-				document.getElementById("error").innerHTML = ''
-				document.getElementById("qrcode").innerHTML = ''
-				document.getElementById("note").innerHTML = '<p style="color: #4cd964;"><strong>This URL is verified.</strong> This URL has been verified and is proven to not do any harm. The user will not get any alert.</p>'
-				if(vURLs.indexOf(QRL)>-1) {
-					new QRCode(document.getElementById("qrcode"), {
-						text: QRL1,
-						width: 200,
-						height: 200,
-						colorDark: "#000000",
-						colorLight: "#ffffff",
-						correctLevel: QRCode.CorrectLevel.H
-					});
-				} else {
-					var QRL = getDomain(QRL1)
-					console.log(QRL)
-					document.getElementById("error").innerHTML = ''
-					document.getElementById("qrcode").innerHTML = ''
-					document.getElementById("note").innerHTML = '<p style="color: #ff9500;"><strong>This URL is not verified.</strong> This URL has not been verified. The user will get an alert. If you are the owner of this website, please contact me <a href="mailto:dante_nl@icloud.com?subject=Contact QR It!" style="color:#ff9500;">via e-mail</a></p>'
-					new QRCode(document.getElementById("qrcode"), {
-						text: `https://apps.dantenl.tk/qrit/open-url?url=${QRL1}`,
-						width: 200,
-						height: 200,
-						colorDark: "#000000",
-						colorLight: "#ffffff",
-						correctLevel: QRCode.CorrectLevel.H
-					});
-				}
+				document.location="mobile.html" ;
 			}
-		}
+		} 
+		else {
+			if(window.location.pathname == "/index.html") {
+				break
+			} else {
+				document.location="index.html" ; 
+			}
+		} 
 	</script>
+</head>
+<body>
+	<div class="split left">
+		<h1>Hi! I'm <span class="dante_nl">dante_nl</span></h1>
+		<p>I am a teenage developer that enjoys coding A LOT! I would rather code one day than I would to do my favorite subject at
+		school for a day (history). Ik ben geboren in Nederland, maar ik spreek Engels beter dan Nederlands (I am born in the
+		Netherlands, but I speak English better than Dutch). I prefer the U.S. version of English, but sadly, the U.K. version
+		is taught at my school, so sometimes it’s a bit difficult to understand, but most of the time it’s pretty easy to
+		understand. I also learn French at school, but it’s not as simple as English sadly. I would rate it 1/10, I wouldn’t
+		start it, but it can be nice tho if you are going to France, and it’s somewhat close to the Netherlands (theoretically
+		we share a border on the island of Sint Maarten / Saint Martin, which is nowhere near the Netherlands), the only
+		obstacle is Belgium, but there they also speak French. Anyways, I moved to #off-topic…</p>
+		<br>
+		<p>I really like Discord, so much that my default profile picture is Wumpus, one of Discord’s mascots. Because of that, the
+		accent color on this website is blurple (#7289da). You can join my Discord via my sidebar on the right on your screen.</p>
+	</div>
+	<div class="split right">
+		<h1>hello from the other side!</h1>
+	</div>
 </body>
-
-</html>
