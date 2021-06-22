@@ -16,6 +16,7 @@
 		content="Here you can open links to other websites like my RoutineHub (rhub.tk?u=dante_nl) or my Discord (/discord). Now all with a fresh new design!" />
 	<meta property="theme-color" content="#7289DA" />
 	<link rel="stylesheet" href="style.css" />
+	<meta charset="utf-8" />
 	<script>
 				if (screen.width <= 699) {
 						if (window.location.pathname == "/mobile.html") {
@@ -54,8 +55,57 @@
 	<br>
 	<p>I really like Discord, so much that my default profile picture is Wumpus, one of Discord’s mascots. Because
 		of that, the
-		accent color on this website is blurple (#7289da). You can join my Discord via my sidebar on the right on
-		your screen or if you're on mobile, below my biography.</p>
+		accent color on this website is <span style="color: #7289da">blurple</span> (<span style="color: #7289da">#7289da</span>). You can join my Discord by clicking "Join the Discord server" below</p>
 	<hr>
-	<h1>hello from below!</h1>
+	<p><a href="javascript:copyDiscord()" class="discordcopy" id="copy">Tap to copy my Discord</a></p>
+	<p><a href="#" class="discordjoin">Join the Discord server</a></p>
+	<p><a href="https://rhub.xyz?u=dante_nl" class="rhbutton">View my RoutineHub</a></p>
+	</div>
+	<script>
+		function copyDiscord() {
+			var selectText = document.getElementById("TagName").innerHTML;
+			var input = document.createElement("input");
+			input.value = selectText;
+			document.body.appendChild(input);
+			input.select();
+			document.execCommand("copy");
+			document.body.removeChild(input);
+			if (typeof count === 'undefined') {
+				count = 1
+				document.getElementById('copy').innerHTML = "Copied!"
+			} else if (count == 1) {
+				count = count + 1
+				document.getElementById('copy').innerHTML = "Cloned!"
+			} else if (count == 2) {
+				count = count + 1
+				document.getElementById('copy').innerHTML = "Duped!"
+			} else if (count == 3) {
+				count = count + 1
+				document.getElementById('copy').innerHTML = "Super Duped!"
+			} else if (count == 4) {
+				count = count + 1
+				document.getElementById('copy').innerHTML = "Super Duper Duped!"
+			} else if (count == 5) {
+				count = count + 1
+				document.getElementById('copy').innerHTML = "Super Duper Duper Duped!"
+			} else if (count == 6) {
+				count = count + 1
+				document.getElementById('copy').innerHTML = "Super Duper Duper Duper Duped!"
+			} else if (count == 7) {
+				count = count + 1
+				document.getElementById('copy').innerHTML = "stop touching me please thanks"
+			} else if (count == 8) {
+				count = count + 1
+				document.getElementById('copy').innerHTML = "stop please!"
+			} else if (count == 9) {
+				count = count + 1
+				document.getElementById('copy').innerHTML = "please stop!"
+			} else if (count >= 10) {
+				count = count + 1
+				document.getElementById('copy').innerHTML = `stop, you did this ${count} times already!!`
+				document.getElementById('copy').style.background = "#ED4245"
+			}
+		}
+	</script>
+	<span style="display: none" id="TagName">dante_nl#0001</span>
 </body>
