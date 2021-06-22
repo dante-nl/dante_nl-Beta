@@ -39,6 +39,7 @@ body {
 	background: linear-gradient(to right, #7289DA, #5865f2);
   	height: 2px;
 	border: none;
+	border-radius: 8px;
  }
 
 /* ⬇️ Layout */
