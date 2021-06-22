@@ -35,6 +35,11 @@ body {
 	background-clip: text;
  }
 
+ hr {
+	background: linear-gradient(to right, #7289DA, #5865f2);
+  	height: 5px;
+ }
+
 /* ⬇️ Layout */
 
  .split {
