@@ -18,24 +18,37 @@
 	<link rel="stylesheet" href="style.css" />
 	<meta charset="utf-8" />
 	<script>
-				if (screen.width <= 699) {
-						if (window.location.pathname == "/mobile.html") {
-							exit()
-						} else {
-							document.location = "mobile.html";
-						}
-					}
-					else {
-						if (window.location.pathname == "/index.html") {
-							exit()
-						} else {
-							document.location = "index.html";
-						}
-					}
+		/* Optimzing stuff */
+		if (screen.width <= 699) {
+			if (window.location.pathname == "/mobile.html") {
+				exit()
+			} else {
+				document.location = "mobile.html";
+			}
+		}
+		else {
+			if (window.location.pathname == "/index.html") {
+				exit()
+		} else {
+			document.location = "index.html";
+				}
+		}
+
+		/* Check if FileSaver works */
+			try {
+				var isFileSaverSupported = !!new Blob;
+			} catch (e) {
+				var oldbrowser = document.getElementById("oldbrowser");
+				oldbrowser.style.display = "block";
+			}
 	</script>
 </head>
 
 <body>
+	<div class="alert" id="oldbrowser" style="display: none;">
+		<strong>Hey!</strong> The file saving function doesn't work in your browser, so if there is an announcement to show
+		here, you can't permantly close it!
+	</div>
 	<h1>Hi! I'm <span class="dante_nl">dante_nl</span>!</h1>
 	<p>I am a teenage developer that enjoys coding A LOT! I would rather code one day than I would to do my favorite
 		subject at
@@ -58,8 +71,8 @@
 		accent color on this website is <span style="color: #7289da">blurple</span> (<span style="color: #7289da">#7289da</span>). You can join my Discord by clicking "Join the Discord server" below</p>
 	<hr>
 	<p><a href="javascript:copyDiscord()" class="discordcopy" id="copy">Tap to copy my Discord</a></p>
-	<p><a href="#" class="discordjoin">Join the Discord server</a></p>
-	<p><a href="https://rhub.xyz?u=dante_nl" class="rhbutton">View my RoutineHub</a></p>
+	<p><a href="/discord" class="discordjoin" rel="noopener noreferrer" target="_blank">Join the Discord server</a></p>
+	<p><a href="https://rhub.xyz?u=dante_nl" class="rhbutton" rel="noopener noreferrer" target="_blank">View my RoutineHub</a></p>
 	</div>
 	<script>
 		function copyDiscord() {
