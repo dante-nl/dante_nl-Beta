@@ -33,10 +33,22 @@
 				document.location="index.html" ; 
 			}
 		}
+
+		/* Check if FileSaver works */
+		try {
+			var isFileSaverSupported = !!new Blob;
+		} catch (e) { 
+			var oldbrowser = document.getElementById("oldbrowser");
+			oldbrowser.style.display = "block";
+		}
 	</script>
 </head>
 <body>
+	
 	<div class="split left">
+	<div class="alert" id="oldbrowser" style="display: none;">
+		<strong>Hey!</strong> The file saving function doesn't work in your browser, so if there is an announcement to show here, you can't permantly close it!
+	</div>
 		<h1>Hi! I'm <span class="dante_nl">dante_nl</span>!</h1>
 		<p>I am a teenage developer that enjoys coding A LOT! I would rather code one day than I would to do my favorite subject at
 		school for a day (history). Ik ben geboren in Nederland, maar ik spreek Engels beter dan Nederlands (I am born in the
@@ -56,7 +68,7 @@
 		<p><a href="javascript:copyDiscord()" class="discordcopy" id="copy">Click to copy my Discord</a></p>
 		<p><a href="/discord" class="discordjoin" rel="noopener noreferrer" target="_blank">Join the Discord server</a></p>
 		<p><a href="https://rhub.xyz?u=dante_nl" class="rhbutton" rel="noopener noreferrer" target="_blank">View my RoutineHub</a></p>
-		<!--Add Github here-->
+		<p><a href="/github" class="ghbutton" rel="noopener noreferrer" target="_blank">View my Github</a>
 	</div>
 	<script>
 		function copyDiscord() {
@@ -101,8 +113,17 @@
 				count = count + 1
 				document.getElementById('copy').innerHTML = `stop, you did this ${count} times already!!`
 				document.getElementById('copy').style.background = "#ED4245"
+				document.getElementById("TagName2").innerHTML = `you copied "dante_nl#0001" ${count} times`
+				var selectText = document.getElementById("TagName2").innerHTML;
+				var input = document.createElement("input");
+				input.value = selectText;
+				document.body.appendChild(input);
+				input.select();
+				document.execCommand("copy");
+				document.body.removeChild(input);
 			}
 		}
 	</script>
 	<span style="display: none" id="TagName">dante_nl#0001</span>
+	<span style="display: none" id="TagName2"></span>
 </body>
