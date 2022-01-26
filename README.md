@@ -1,2 +1,4 @@
 # dante_nl-Beta
-Some beta stuff. Can be found on beta.dantenl.tk
+## Test my latest projects!
+
+[dante_nl Beta](https://dantenl.tk) has the latest projects I'm working on, and I usually post things here to ask for feedback. However, please remember that **everything is in beta, and might not work properly!**
