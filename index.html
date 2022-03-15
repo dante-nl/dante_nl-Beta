@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta property="og:description" content="old :(">
+	<meta property="og:description" content="Custime is a customisable time viewer, with different backgrounds, fonts and the ability to switch from 24 hour time to 12 hour time!">
 	<link rel="stylesheet" href="style.css">
 	<script src="https://kit.fontawesome.com/ee422b4c3c.js" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
@@ -25,7 +25,7 @@
 			<!-- Add date and a switch for other timezones -->
 		</div></a></h1>
 	</div>
-	<h3 id="copyConfirm" class="icon hideText">Copied URL!</h3>
+	<p id="copyConfirm" class="hideText pill">Copied URL! <span class="close" onclick="this.parentElement.classList.add('hideText');">&times;</span></p>
 	<h1>
 		<div style="display:flex;justify-content:center;align-items:center;">
 			<a id="clock" href="javascript:changeTimeFormat()" class="far fa-clock fa-sm icon"></a>
@@ -63,8 +63,8 @@
 			const TimeUpdate = setInterval(Time, 1000);
 			font = 0
 			// BaseURL = "https://custime.dantenl.tk"
-			// BaseURL = "http://127.0.0.1:5500/index.html"
-			BaseURL = "http://beta.dantenl.tk"
+			BaseURL = "http://127.0.0.1:5500/index.html"
+			// BaseURL = "http://beta.dantenl.tk"
 			color = "white"
 			LoadStyles()
 		}
@@ -160,18 +160,21 @@
 				console.log("Font is now Fira Code")
 				font = 9
 			} else {
+				document.getElementById("time").style.fontFamily = "Open Sans, sans-serif"
+				console.log("Font is now the default (Open Sans)")
+				font = 0		
+			}
+			const loadCustomFont = queryString.get('customfont')
+			if (loadCustomFont != null) {
 				WebFont.load({
 					google: {
-						families: [`${loadFont}:400`]
+						families: [`${loadCustomFont}:400`]
 					}
 				});
-				document.getElementById("time").style.fontFamily = `${loadFont}, sans-serif`
-				console.log("Font is now a custom font")
-				// } else {
-				// 	document.getElementById("time").style.fontFamily = "Open Sans, sans-serif"
-				// 	console.log("Font is now reset (Open Sans)")
-				// 	font = 0
-				// }
+				document.getElementById("time").style.fontFamily = `${loadCustomFont}, sans-serif`
+				CustomFont = loadCustomFont
+				font = "custom"
+				console.log(`Font is now a custom font. (${loadCustomFont}) Fonts loaded with WebFontLoader`)
 			}
 		}
 
@@ -347,6 +350,8 @@
 				ShareURL_3 = "&font=PM"
 			} else if (font == 9) {
 				ShareURL_3 = "&font=FC"
+			} else if (font == "custom") {
+				ShareURL_3 = `&customfont=${CustomFont}`
 			}
 			// alert(`${BaseURL}${ShareURL_1}${ShareURL_2}${ShareURL_3}`)
 			copy(`${BaseURL}${ShareURL_1}${ShareURL_2}${ShareURL_3}`)
@@ -359,7 +364,7 @@
 			textField.select();
 			document.execCommand('copy');
 			textField.remove();
-			document.getElementById("copyConfirm").classList.toggle("hideText")
+			document.getElementById("copyConfirm").classList.remove("hideText")
 		}
 
 		function wait(ms) {
