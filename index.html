@@ -22,10 +22,10 @@
 			<div class="rect3"></div>
 			<div class="rect4"></div>
 			<div class="rect5"></div>
-			<!-- Add date and a switch for other timezones -->
-		</div></a></h1>
+		</div></a><p class="icon tooltip" id="date"><span id="dateContent">DD/MM/YY</span> <span class="tooltiptext">DD/MM/YY</span></p></h1>
+		
 	</div>
-	<p id="copyConfirm" class="hideText pill">Copied URL! <span class="close" onclick="this.parentElement.classList.add('hideText');">&times;</span></p>
+	<p id="copyConfirm" class="hideText pill">Copied URL! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span></p>
 	<h1>
 		<div style="display:flex;justify-content:center;align-items:center;">
 			<a id="clock" href="javascript:changeTimeFormat()" class="far fa-clock fa-sm icon"></a>
@@ -54,28 +54,19 @@
 				console.log("Hey desktop/laptop user! You get the regular treatment with regular styles D: At least you get to see how this website is intended to be viewed")
 				document.body.classList.remove("mobile")
 			}
-			// document.getElementById("copyConfirm").style.display = "none"
 			AM_PM = false
 			now = new Date()
 			CurrentHour = now.getHours()
 			CurrentMinute = now.getMinutes()
 			CurrentSecond = now.getSeconds()
 			const TimeUpdate = setInterval(Time, 1000);
+			const DateUpdate = setInterval(UpdateDay, 1000);
 			font = 0
 			// BaseURL = "https://custime.dantenl.tk"
 			// BaseURL = "http://127.0.0.1:5500/index.html"
 			BaseURL = "http://beta.dantenl.tk"
 			color = "white"
 			LoadStyles()
-
-			WebFontConfig = {
-				// loading: function () { },
-				// active: function () { },
-				// inactive: WebFontError(),
-				// fontloading: function (familyName, fvd) { },
-				// fontactive: function (familyName, fvd) { },
-				// fontinactive: function (familyName, fvd) { }
-			};
 		}
 
 		function LoadStyles() {
@@ -134,42 +125,52 @@
 			const loadFont = queryString.get('font') 
 			if (loadFont == "SS") {
 				document.getElementById("time").style.fontFamily = "Smooch Sans, sans-serif"
+				document.getElementById("date").style.fontFamily = "Smooch Sans, sans-serif"
 				console.log("Font is now Smooch Sans")
 				font = 1
 			} else if (loadFont == "PD") {
 				document.getElementById("time").style.fontFamily = "Playfair Display, sans-serif"
+				document.getElementById("date").style.fontFamily = "Playfair Display, sans-serif"
 				console.log("Font is now Playfair Display")
 				font = 2
 			} else if (loadFont == "Av") {
 				document.getElementById("time").style.fontFamily = "Arvo, serif"
+				document.getElementById("date").style.fontFamily = "Arvo, serif"
 				console.log("Font is now Arvo")
 				font = 3
 			} else if (loadFont == "Sl") {
 				document.getElementById("time").style.fontFamily = "Staatliches, cursive"
+				document.getElementById("date").style.fontFamily = "Staatliches, cursive"
 				console.log("Font is now Staatliches")
 				font = 4
 			} else if (loadFont == "Mc") {
 				document.getElementById("time").style.fontFamily = "MinecraftiaRegular, cursive"
+				document.getElementById("date").style.fontFamily = "MinecraftiaRegular, cursive"
 				console.log("Font is now Minecraftia")
 				font = 5
 			} else if (loadFont == "Cv") {
 				document.getElementById("time").style.fontFamily = "Caveat, cursive"
+				document.getElementById("date").style.fontFamily = "Caveat, cursive"
 				console.log("Font is now Caveat")
 				font = 6
 			} else if (loadFont == "Sm") {
 				document.getElementById("time").style.fontFamily = "Sacramento, cursive"
+				document.getElementById("date").style.fontFamily = "Sacramento, cursive"
 				console.log("Font is now Sacramento")
 				font = 7
 			} else if (loadFont == "PM") {
 				document.getElementById("time").style.fontFamily = "IBM Plex Mono, monospace"
+				document.getElementById("date").style.fontFamily = "IBM Plex Mono, monospace"
 				console.log("Font is now IBM Plex Mono")
 				font = 8
 			} else if (loadFont == "FC") {
 				document.getElementById("time").style.fontFamily = "Fira Code, monospace"
+				document.getElementById("date").style.fontFamily = "Fira Code, monospace"
 				console.log("Font is now Fira Code")
 				font = 9
 			} else {
 				document.getElementById("time").style.fontFamily = "Open Sans, sans-serif"
+				document.getElementById("date").style.fontFamily = "Open Sans, sans-serif"
 				console.log("Font is now the default (Open Sans)")
 				font = 0		
 			}
@@ -179,11 +180,7 @@
 					google: {
 						families: [`${loadCustomFont}:400`]
 					},
-					// inactive: WebFontError () {
-					// 	console.log("Font could not be loaded!");
-					// }
 					inactive: function () {
-						// console.log("Fonts are being loaded");
 						WebFontError()
 					},
 				});
@@ -191,6 +188,46 @@
 				CustomFont = loadCustomFont
 				font = "custom"
 				console.log(`Font is now a custom font. (${loadCustomFont}) Fonts loaded with WebFontLoader`)
+			}
+
+			const loadTextColor = queryString.get('textcolor')
+			console.log(`loadTextColor: ${loadTextColor}`)
+			if (loadTextColor == null || loadTextColor == "") {
+				console.log("No text color imported!")
+			} else {
+				var reg = /^([0-9a-f]{3}){1,2}$/i
+				if (reg.test(loadTextColor) == true) {
+					TextColor = `#${loadTextColor}`
+					document.getElementById("time").style.color = TextColor
+					document.getElementById("date").style.color = TextColor
+				} else {
+					document.getElementById("copyConfirm").innerHTML = `That is not a valid hex color! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
+					document.getElementById("copyConfirm").classList.remove("hideText")
+					document.getElementById("copyConfirm").classList.add("slide-in")
+					TextColor = "#000"
+				}
+			}
+
+			const loadBGColor = queryString.get('bgcolor')
+			if (loadBGColor == null || loadBGColor == "") {
+				console.log("No background color imported!")
+			} else {
+				var reg = /^([0-9a-f]{3}){1,2}$/i
+				if (reg.test(loadBGColor) == true) {
+					BackgroundColor = `#${loadBGColor}`
+					document.body.style.backgroundColor = BackgroundColor
+					document.getElementsByClassName('circle')[0].style.display = "none"
+					document.getElementsByClassName('circle')[1].style.display = "none"
+					document.getElementsByClassName('circle')[2].style.display = "none"
+					document.getElementsByClassName('circle')[3].style.display = "none"
+					document.getElementsByClassName('circle')[4].style.display = "none"
+					
+				} else {
+					document.getElementById("copyConfirm").innerHTML = `That is not a valid hex color! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
+					document.getElementById("copyConfirm").classList.remove("hideText")
+					document.getElementById("copyConfirm").classList.add("slide-in")
+					BackgroundColor = "#000"
+				}
 			}
 		}
 
@@ -211,6 +248,14 @@
 			} else {
 				document.getElementById("time").innerText = formatAMPM(new Date)
 			}
+		}
+
+		function UpdateDay() {
+			now = new Date()
+			thisDay = now.getDate()
+			thisMonth = now.getMonth() + 1
+			thisYear = now.getFullYear()
+			document.getElementById("dateContent").innerText = `${thisDay}-${thisMonth}-${thisYear}`
 		}
 
 		function formatAMPM(date) {
@@ -286,42 +331,52 @@
 		function changeFont() {
 			if (font==0) {
 				document.getElementById("time").style.fontFamily = "Smooch Sans, sans-serif"
+				document.getElementById("date").style.fontFamily = "Smooch Sans, sans-serif"
 				console.log("Font is now Smooch Sans")
 				font++
 			} else if (font == 1) {
 				document.getElementById("time").style.fontFamily = "Playfair Display, sans-serif"
+				document.getElementById("date").style.fontFamily = "Playfair Display, sans-serif"
 				console.log("Font is now Playfair Display")
 				font++
 			} else if (font == 2) {
 				document.getElementById("time").style.fontFamily = "Arvo, serif"
+				document.getElementById("date").style.fontFamily = "Arvo, serif"
 				console.log("Font is now Arvo")
 				font++
 			} else if (font == 3) {
 				document.getElementById("time").style.fontFamily = "Staatliches, cursive"
+				document.getElementById("date").style.fontFamily = "Staatliches, cursive"
 				console.log("Font is now Staatliches")
 				font++
 			} else if (font == 4) {
 				document.getElementById("time").style.fontFamily = "MinecraftiaRegular, cursive"
+				document.getElementById("date").style.fontFamily = "MinecraftiaRegular, cursive"
 				console.log("Font is now Minecraftia")
 				font++
 			} else if (font == 5) {
 				document.getElementById("time").style.fontFamily = "Caveat, cursive"
+				document.getElementById("date").style.fontFamily = "Caveat, cursive"
 				console.log("Font is now Caveat")
 				font++
 			} else if (font == 6) {
 				document.getElementById("time").style.fontFamily = "Sacramento, cursive"
+				document.getElementById("date").style.fontFamily = "Sacramento, cursive"
 				console.log("Font is now Sacramento")
 				font++
 			} else if (font == 7) {
 				document.getElementById("time").style.fontFamily = "IBM Plex Mono, monospace"
+				document.getElementById("date").style.fontFamily = "IBM Plex Mono, monospace"
 				console.log("Font is now IBM Plex Mono")
 				font++
 			} else if (font == 8) {
 				document.getElementById("time").style.fontFamily = "Fira Code, monospace"
+				document.getElementById("date").style.fontFamily = "Fira Code, monospace"
 				console.log("Font is now Fira Code")
 				font++
 			} else if (font == 9) {
 				document.getElementById("time").style.fontFamily = "Open Sans, sans-serif"
+				document.getElementById("date").style.fontFamily = "Open Sans, sans-serif"
 				console.log("Font is now reset (Open Sans)")
 				font = 0
 			}
@@ -374,8 +429,9 @@
 		}
 
 		function WebFontError() {
-			document.getElementById("copyConfirm").innerHTML = `Could not load custom font! <span class="close" onclick="this.parentElement.classList.add('hideText');">&times;</span>`
+			document.getElementById("copyConfirm").innerHTML = `Could not load custom font! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
 			document.getElementById("copyConfirm").classList.remove("hideText")
+			document.getElementById("copyConfirm").classList.add("slide-in")
 		}
 
 		function copy(text) {
@@ -385,7 +441,8 @@
 			textField.select();
 			document.execCommand('copy');
 			textField.remove();
-			document.getElementById("copyConfirm").innerHTML = `Copied URL! <span class="close" onclick="this.parentElement.classList.add('hideText');">&times;</span>`
+			document.getElementById("copyConfirm").innerHTML = `Copied URL! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
+			document.getElementById("copyConfirm").classList.add("slide-in")
 			document.getElementById("copyConfirm").classList.remove("hideText")
 		}
 
