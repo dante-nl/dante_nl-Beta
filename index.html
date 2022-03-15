@@ -67,6 +67,15 @@
 			BaseURL = "http://beta.dantenl.tk"
 			color = "white"
 			LoadStyles()
+
+			WebFontConfig = {
+				// loading: function () { },
+				// active: function () { },
+				// inactive: WebFontError(),
+				// fontloading: function (familyName, fvd) { },
+				// fontactive: function (familyName, fvd) { },
+				// fontinactive: function (familyName, fvd) { }
+			};
 		}
 
 		function LoadStyles() {
@@ -169,7 +178,14 @@
 				WebFont.load({
 					google: {
 						families: [`${loadCustomFont}:400`]
-					}
+					},
+					// inactive: WebFontError () {
+					// 	console.log("Font could not be loaded!");
+					// }
+					inactive: function () {
+						// console.log("Fonts are being loaded");
+						WebFontError()
+					},
 				});
 				document.getElementById("time").style.fontFamily = `${loadCustomFont}, sans-serif`
 				CustomFont = loadCustomFont
@@ -357,6 +373,11 @@
 			copy(`${BaseURL}${ShareURL_1}${ShareURL_2}${ShareURL_3}`)
 		}
 
+		function WebFontError() {
+			document.getElementById("copyConfirm").innerHTML = `Could not load custom font! <span class="close" onclick="this.parentElement.classList.add('hideText');">&times;</span>`
+			document.getElementById("copyConfirm").classList.remove("hideText")
+		}
+
 		function copy(text) {
 			var textField = document.createElement('textarea');
 			textField.innerText = text;
@@ -364,6 +385,7 @@
 			textField.select();
 			document.execCommand('copy');
 			textField.remove();
+			document.getElementById("copyConfirm").innerHTML = `Copied URL! <span class="close" onclick="this.parentElement.classList.add('hideText');">&times;</span>`
 			document.getElementById("copyConfirm").classList.remove("hideText")
 		}
 
