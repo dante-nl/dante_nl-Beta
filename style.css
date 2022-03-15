@@ -54,12 +54,12 @@ body {
 	align-items: center;
 	height: 85%;
 	width: 100%;
-	font-size: 500%;
 }
 
 .clock a {
 	text-decoration: none;
-	color: #000
+	color: #000;
+	font-size: 500%;
 }
 
 .icon {
@@ -72,8 +72,12 @@ body {
 }
 
 .mobile .clock {
-	font-size: 200%;
+	font-size: 80%;
 	height: 80%;
+}
+
+.mobile .clock a {
+	font-size: 200%;
 }
 
 .circle {
@@ -89,12 +93,11 @@ body {
 	margin: 2px;
 }
 
-.menu {
+.tooltip {
   	position: relative;
-  	display: inline-block;
 }
 
-.menu .menutext {
+.tooltip .tooltiptext {
 	visibility: hidden;
 	width: 200px;
 	background-color: black;
@@ -102,6 +105,7 @@ body {
 	text-align: center;
 	border-radius: 6px;
 	padding: 5px 0;
+	font-size: 50% !important;
 
 	position: absolute;
 	z-index: 1;
@@ -110,7 +114,7 @@ body {
 	margin-left: -100px;
 }
 
-.menu:hover .menutext {
+.tooltip:hover .tooltiptext {
   visibility: visible;
 }
 
@@ -150,6 +154,7 @@ body {
 	color: #ff686b
 }
 
+
 /* --------------- */
 /* ⬇️ Custom styling */
 /* --------------- */
@@ -172,6 +177,14 @@ body {
 	background-color: #996868;
 }
 
+
+.red .tooltip .tooltiptext {
+	color: #FFADAD;
+	background-color: #996868;
+}
+
+
+
 .yellow {
 	background-color: #FDFFB6;
 }
@@ -189,6 +202,13 @@ body {
 	color: #FDFFB6;
 	background-color: #98996D;
 }
+
+.yellow .tooltip .tooltiptext {
+	color: #FDFFB6;
+	background-color: #98996D;
+}
+
+
 
 .green {
 	background-color: #CAFFBF;
@@ -208,6 +228,13 @@ body {
 	background-color: #799973;
 }
 
+.green .tooltip .tooltiptext {
+	color: #CAFFBF;
+	background-color: #799973;
+}
+
+
+
 .blue {
 	background-color: #A0C4FF;
 }
@@ -224,6 +251,53 @@ body {
 .blue .pill {
 	color: #A0C4FF;
 	background-color: #607699;
+}
+
+.blue .tooltip .tooltiptext {
+	color: #A0C4FF;
+	background-color: #607699;
+}
+
+/* --------------- */
+/* ⬇️ Advanced options page */
+/* --------------- */
+
+#col-1 {
+  position: relative;
+  width: 40%;
+  float: left;
+  height: 100%;
+  background-color: #ccc;
+  z-index: 1010101010
+}
+
+#col-2 {
+  position: relative;
+  width: 60%;
+  float: left;
+  height: 100%;
+  background-color: #fff;
+  z-index: 1010101010
+}
+
+.red-a #col-1 {
+	background-color: #FFADAD;
+	color: #996868;
+}
+
+.yellow-a #col-1 {
+	color: #98996D;
+	background-color: #FDFFB6;
+}
+
+.green-a #col-1 {
+	color: #799973;
+	background-color: #CAFFBF;
+}
+
+.blue-a #col-1 {
+	color: #607699;
+	background-color: #A0C4FF;
 }
 
 /* --------------- */
@@ -281,4 +355,39 @@ body {
 		transform: scaleY(1.0);
 		-webkit-transform: scaleY(1.0);
 	}
+}
+
+
+/* --------------- */
+/* ⬇️ Animation from animista.net */
+/* --------------- */
+
+.slide-in {
+	-webkit-animation: slide-in 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+			animation: slide-in 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes slide-in {
+  0% {
+	-webkit-transform: translateY(1000px);
+			transform: translateY(1000px);
+	opacity: 0;
+  }
+  100% {
+	-webkit-transform: translateY(0);
+			transform: translateY(0);
+	opacity: 1;
+  }
+}
+@keyframes slide-in {
+  0% {
+	-webkit-transform: translateY(1000px);
+			transform: translateY(1000px);
+	opacity: 0;
+  }
+  100% {
+	-webkit-transform: translateY(0);
+			transform: translateY(0);
+	opacity: 1;
+  }
 }
