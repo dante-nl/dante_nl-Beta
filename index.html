@@ -9,7 +9,7 @@
 	<script src="https://kit.fontawesome.com/ee422b4c3c.js" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
 	<script>
-		document.querySelector('meta[name="og:description"]').setAttribute(`content! Current Hour: ${CurrentHour}`, _desc);
+		// document.querySelector('meta[name="og:description"]').setAttribute(`content! Current Hour: ${CurrentHour}`, _desc);
 		// ^ Make it work! Has to say things such as time, background color and font if they're set, otherwise a default description
 	</script>
 	<title>Custime</title>
@@ -45,7 +45,6 @@
 
 	<script>
 		function load() {
-			document.querySelector('meta[name="og:description"]').setAttribute(`content! Current Hour: ${CurrentHour}`, _desc);
 			if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 				// Mobile device
 				console.log("Hey mobile user! You get the special VIP treatment with some cool new styles")
