@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<script src="https://kit.fontawesome.com/ee422b4c3c.js" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+	<title>Advanced Options - Custime</title>
+</head>
+<body onload="load()">
+	
+	<div id="col-1">
+		<h1>Custime Advanced Settings</h1>
+		<p>Here you can generate even more custom versions of Custime! Instead of the default ten fonts, you get the entire collection of Google Fonts! And instead five different colors, you can choose from basically every color!</p>
+		<form action="javascript:readInput('font')">
+			<label for="font-url">Font name: </label>
+			<input type="text" name="font-url" id="FontInput" placeholder="Open Sans">
+			<input type="submit" value="Apply font">
+		</form>
+
+		<form action="javascript:readInput('text_color')">
+			<label for="color">Text color: </label>
+			<input type="text" name="color" id="ColorInput" placeholder="#000000">
+			<input type="submit" value="Apply text color">
+		</form>
+
+		<form action="javascript:readInput('background_color')">
+			<label for="color">Background color: </label>
+			<input type="text" name="color2" id="ColorInput2" placeholder="#FFF">
+			<input type="submit" value="Apply background color color">
+		</form>
+
+		<p id="copyConfirm" class="hideText pill">Copied URL! <span class="close"
+				onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>
+		</p>
+
+		<a href="javascript:generateURL()">Copy URL</a>
+		<br>
+		<a href="javascript:changeColor('red')" style="background-color: #FFADAD" class="circle"></a>
+		<a href="javascript:changeColor('yellow')" style="background-color: #FDFFB6" class="circle"></a>
+		<a href="javascript:changeColor('green')" style="background-color: #CAFFBF" class="circle"></a>
+		<a href="javascript:changeColor('blue')" style="background-color: #A0C4FF" class="circle"></a>
+		<a href="javascript:changeColor('white')" style="background-color: #ccc" class="circle"></a>
+	</div>
+	<div id="col-2">
+		<div class="clock">
+			<h1>
+				<a id="time">13:34:25</a>
+				<p class="icon tooltip" id="date"><span id="dateContent">DD/MM/YY</span> <span class="tooltiptext">DD/MM/YY</span></p>
+			</h1>
+		</div>
+		<h1><a id="clock" href="javascript:changeTimeFormat()" class="far fa-clock fa-sm icon"></a></h1>
+	</div>
+
+
+	<script>
+		function load() {
+			font = 0
+			BackgroundColor = "fff"
+			TextColor = "000"
+			AM_PM = false
+		}
+
+		function readInput(intention) {
+			if (intention == "font") {
+				FontName = document.getElementById("FontInput").value
+				if (FontName == null || FontName == "") {
+					document.getElementById("time").style.fontFamily = `Open Sans, sans-serif`
+					CustomFont = null
+					font = 0
+				} else {
+					WebFont.load({
+						google: {
+							families: [`${FontName}:400`]
+						},
+						inactive: function () {
+							WebFontError()
+						},
+					});
+					document.getElementById("time").style.fontFamily = `${FontName}, sans-serif`
+					CustomFont = FontName
+					font = "custom"
+					console.log(`Font is now a custom font. (${FontName}) Fonts loaded with WebFontLoader`)
+				}
+			}
+			else if (intention == "text_color") {
+				HexColor = document.getElementById("ColorInput").value
+				if (HexColor == null || HexColor == "") {
+					document.getElementById("time").style.color = "000000"
+					TextColor = "000"
+				} else {
+					var reg = /^#([0-9a-f]{3}){1,2}$/i
+					if (reg.test(HexColor) == true) {
+						document.getElementById("time").style.color = HexColor
+						TextColor = HexColor.replace(/#/g, "")
+					} else {
+						document.getElementById("copyConfirm").innerHTML = `That is not a valid hex color! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
+						document.getElementById("copyConfirm").classList.remove("hideText")
+						document.getElementById("copyConfirm").classList.add("slide-in")
+						TextColor = "000"
+					}
+				}
+			} 
+			else if (intention == "background_color") {
+				HexColor2 = document.getElementById("ColorInput2").value
+				if (HexColor2 == null || HexColor2 == "") {
+					document.getElementById("col-2").style.backgroundColor = "#FFF"
+					BackgroundColor = "fff"
+				} else {
+					var reg = /^#([0-9a-f]{3}){1,2}$/i
+					if (reg.test(HexColor2) == true) {
+						document.getElementById("col-2").style.backgroundColor = HexColor2
+						BackgroundColor = HexColor2.replace(/#/g, "")
+					} else {
+						document.getElementById("copyConfirm").innerHTML = `That is not a valid hex color! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
+						document.getElementById("copyConfirm").classList.remove("hideText")
+						document.getElementById("copyConfirm").classList.add("slide-in")
+						BackgroundColor = "fff"
+					}
+				}
+			}
+		}
+
+		function generateURL() {
+			baseURL = "http://127.0.0.1:5500/index.html"
+			if (font == 0) {
+				Part1_URL = "?font=OS"
+			} else {
+				Part1_URL = `?customfont=${CustomFont}`
+			}
+			if (AM_PM == true) {
+				Part2_URL = "&time=12"
+			} else {
+				Part2_URL = "&time=24"
+			}
+			Part3_URL = `&textcolor=${TextColor}`
+			Part4_URL = `&bgcolor=${BackgroundColor}`
+			copy(`${baseURL}${Part1_URL}${Part2_URL}${Part3_URL}${Part4_URL}`)
+		}
+
+		function WebFontError() {
+			document.getElementById("copyConfirm").innerHTML = `Could not load custom font! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
+			document.getElementById("copyConfirm").classList.remove("hideText")
+			document.getElementById("copyConfirm").classList.add("slide-in")
+		}
+
+		function copy(text) {
+			var textField = document.createElement('textarea');
+			textField.innerText = text;
+			document.body.appendChild(textField);
+			textField.select();
+			document.execCommand('copy');
+			textField.remove();
+			document.getElementById("copyConfirm").innerHTML = `Copied URL! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
+			document.getElementById("copyConfirm").classList.add("slide-in")
+			document.getElementById("copyConfirm").classList.remove("hideText")
+		}
+
+		function changeColor(LocalColor) {
+			if (LocalColor == "red") {
+				color = "red"
+				document.body.classList.add("red-a")
+				document.body.classList.remove("yellow-a")
+				document.body.classList.remove("green-a")
+				document.body.classList.remove("blue-a")
+				console.log("Changed style to red!")
+			} else if (LocalColor == "yellow") {
+				color = "yellow"
+				document.body.classList.remove("red-a")
+				document.body.classList.add("yellow-a")
+				document.body.classList.remove("green-a")
+				document.body.classList.remove("blue-a")
+				console.log("Changed style to yellow!")
+			} else if (LocalColor == "green") {
+				color = "green"
+				document.body.classList.remove("red-a")
+				document.body.classList.remove("yellow-a")
+				document.body.classList.add("green-a")
+				document.body.classList.remove("blue-a")
+				console.log("Changed style to green!")
+			} else if (LocalColor == "blue") {
+				color = "blue"
+				document.body.classList.remove("red-a")
+				document.body.classList.remove("yellow-a")
+				document.body.classList.remove("green-a")
+				document.body.classList.add("blue-a")
+				console.log("Changed style to blue!")
+			} else if (LocalColor == "white") {
+				color = "white"
+				document.body.classList.remove("red-a")
+				document.body.classList.remove("yellow-a")
+				document.body.classList.remove("green-a")
+				document.body.classList.remove("blue-a")
+				console.log("Reset style!")
+			}
+		}
+
+		function changeTimeFormat() {
+			if (AM_PM == false) {
+				AM_PM = true
+				document.getElementById("clock").classList.remove('far')
+				document.getElementById("clock").classList.add('fas')
+				document.getElementById("time").innerText = "1:34:25 PM"
+			} else {
+				AM_PM = false
+				document.getElementById("time").innerText = "13:34:25"
+				document.getElementById("clock").classList.add('far')
+				document.getElementById("clock").classList.remove('fas')
+			}
+		}
+	</script>
+</body>
+</html>
