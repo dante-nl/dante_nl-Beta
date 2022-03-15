@@ -16,11 +16,13 @@ Fonts retrieved from Google Fonts:
 - Playfair Display
 - Arvo
 - Staatliches
-- Minecraftia
 - Caveat
 - Sacramento
 - IBM Plex Mono
 - Fira Code
+
+Fonts retrieved from fontslibrary.org:
+- Minecraftia
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Arvo&family=Caveat&family=Fira+Code&family=IBM+Plex+Mono&family=Open+Sans&family=Playfair+Display:ital@1&family=Press+Start+2P&family=Sacramento&family=Smooch+Sans&family=Staatliches&display=swap');
@@ -132,6 +134,22 @@ body {
 	margin: 2px;
 }
 
+.pill {
+  background-color: #000;
+  border: none;
+  color: #fff;
+  padding: 5px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  border-radius: 24px;
+}
+
+.close:hover {
+	color: #ff686b
+}
+
 /* --------------- */
 /* ⬇️ Custom styling */
 /* --------------- */
@@ -149,6 +167,11 @@ body {
 	text-decoration: none;
 }
 
+.red .pill {
+	color: #FFADAD;
+	background-color: #996868;
+}
+
 .yellow {
 	background-color: #FDFFB6;
 }
@@ -160,6 +183,11 @@ body {
 .yellow .icon {
 	color: #98996D !important;
 	text-decoration: none;
+}
+
+.yellow .pill {
+	color: #FDFFB6;
+	background-color: #98996D;
 }
 
 .green {
@@ -175,6 +203,10 @@ body {
 	text-decoration: none;
 }
 
+.green .pill {
+	color: #CAFFBF;
+	background-color: #799973;
+}
 
 .blue {
 	background-color: #A0C4FF;
@@ -187,6 +219,11 @@ body {
 .blue .icon {
 	color: #607699 !important;
 	text-decoration: none;
+}
+
+.blue .pill {
+	color: #A0C4FF;
+	background-color: #607699;
 }
 
 /* --------------- */
