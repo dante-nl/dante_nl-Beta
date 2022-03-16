@@ -328,6 +328,19 @@ body {
 	text-decoration: none;
 }
 
+input {
+	background: none;
+	border: 2px solid #000;
+	border-radius: 16px;
+	padding: 2px 5px;
+}
+
+button {
+	background: none;
+	border: 0px solid;
+	font-size: 150%;
+}
+
 /* --------------- */
 /* ⬇️ SpinKit from https://tobiasahlin.com/spinkit/ */
 /* --------------- */
