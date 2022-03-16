@@ -38,6 +38,8 @@
 			<a href="javascript:changeColor('white')" style="background-color: #fff" class="circle"></a>
 
 			<a id="share" href="javascript:share()" class="fas fa-share-alt fa-sm icon"></a>
+			<a id="settings" href="javascript:settings()" class="fa-solid fa-gear icon fa-sm"></a>
+
 		</div>
 	</h1>
 	<div style="font-family: Arial, sans-serif; padding: 20px; background-color: #7289da; color: #fff; border-radius: 8px">
@@ -56,11 +58,13 @@
 				document.body.classList.remove("mobile")
 			}
 			AM_PM = false
+			CustomElements = false
 			now = new Date()
 			CurrentHour = now.getHours()
 			CurrentMinute = now.getMinutes()
 			CurrentSecond = now.getSeconds()
-			const TimeUpdate = setInterval(Time, 1000);
+			SettingsOpen = false
+			const TimeUpdate = setInterval(Time, 800);
 			const DateUpdate = setInterval(UpdateDay, 1000);
 			font = 0
 			// BaseURL = "https://custime.dantenl.tk"
@@ -68,6 +72,96 @@
 			BaseURL = "http://beta.dantenl.tk"
 			color = "white"
 			LoadStyles()
+
+			var HardResetCheck = localStorage.getItem("HardReset")
+			console.log(`HardResetCheck: ${HardResetCheck}`)
+			if (HardResetCheck != "true") {
+				HardReset = false
+				const queryString = new URLSearchParams(window.location.search)
+				const testBG1 = queryString.get('bg')
+				const testBG2 = queryString.get('textcolor')
+				const testBG3 = queryString.get('bgcolor')
+				if (testBG1 == null && testBG2 == null && testBG3 == null) {
+					var Background = localStorage.getItem("bg");
+					if (Background) {
+						changeColor(Background)
+						console.log(`Restored last color scheme from storage. (${Background})`)	
+					}
+				}
+				const testFont1 = queryString.get('font')
+				const testFont2 = queryString.get('customfont')
+				if (testFont1 == null && testFont2 == null) {
+					var Font = localStorage.getItem("font");
+					if (Font) {
+						if (Font == "SS") {
+							document.getElementById("time").style.fontFamily = "Smooch Sans, sans-serif"
+							document.getElementById("date").style.fontFamily = "Smooch Sans, sans-serif"
+							console.log("Restored last font (Smooch Sans)")
+							font = 1
+						} else if (Font == "PD") {
+							document.getElementById("time").style.fontFamily = "Playfair Display, sans-serif"
+							document.getElementById("date").style.fontFamily = "Playfair Display, sans-serif"
+							console.log("Restored last font (Playfair Display)")
+							font = 2
+						} else if (Font == "Av") {
+							document.getElementById("time").style.fontFamily = "Arvo, serif"
+							document.getElementById("date").style.fontFamily = "Arvo, serif"
+							console.log("Restored last font (Arvo)")
+							font = 3
+						} else if (Font == "Sl") {
+							document.getElementById("time").style.fontFamily = "Staatliches, cursive"
+							document.getElementById("date").style.fontFamily = "Staatliches, cursive"
+							console.log("Restored last font (Staatliches)")
+							font = 4
+						} else if (Font == "Mc") {
+							document.getElementById("time").style.fontFamily = "MinecraftiaRegular, cursive"
+							document.getElementById("date").style.fontFamily = "MinecraftiaRegular, cursive"
+							console.log("Restored last font (Minecraftia)")
+							font = 5
+						} else if (Font == "Cv") {
+							document.getElementById("time").style.fontFamily = "Caveat, cursive"
+							document.getElementById("date").style.fontFamily = "Caveat, cursive"
+							console.log("Restored last font (Caveat)")
+							font = 6
+						} else if (Font == "Sm") {
+							document.getElementById("time").style.fontFamily = "Sacramento, cursive"
+							document.getElementById("date").style.fontFamily = "Sacramento, cursive"
+							console.log("Restored last font (Sacramento)")
+							font = 7
+						} else if (Font == "PM") {
+							document.getElementById("time").style.fontFamily = "IBM Plex Mono, monospace"
+							document.getElementById("date").style.fontFamily = "IBM Plex Mono, monospace"
+							console.log("Restored last font (IBM Plex Mono)")
+							font = 8
+						} else if (Font == "FC") {
+							document.getElementById("time").style.fontFamily = "Fira Code, monospace"
+							document.getElementById("date").style.fontFamily = "Fira Code, monospace"
+							console.log("Restored last font (Fira Code)")
+							font = 9
+						} else {
+							document.getElementById("time").style.fontFamily = "Open Sans, sans-serif"
+							document.getElementById("date").style.fontFamily = "Open Sans, sans-serif"
+							console.log("Restored last font (Open Sans)")
+							font = 0
+						}
+					}
+					const testTime = queryString.get('time')
+					if (testTime == null) {
+						var TimeLocal = localStorage.getItem("time")
+						if (TimeLocal) {
+							if (TimeLocal == 12) {
+								changeTimeFormat()
+							} else {
+								AM_PM = false
+							}
+						} else {
+							localStorage.setItem("time", 24)
+						}
+					}
+				}
+			} else {
+				HardReset = true
+			}
 		}
 
 		function LoadStyles() {
@@ -185,6 +279,7 @@
 						WebFontError()
 					},
 				});
+				CustomElements = true
 				document.getElementById("time").style.fontFamily = `${loadCustomFont}, sans-serif`
 				document.getElementById("date").style.fontFamily = `${loadCustomFont}, sans-serif`
 				CustomFont = loadCustomFont
@@ -199,6 +294,7 @@
 			} else {
 				var reg = /^([0-9a-f]{3}){1,2}$/i
 				if (reg.test(loadTextColor) == true) {
+					CustomElements = true
 					TextColor = `#${loadTextColor}`
 					document.getElementById("time").style.color = TextColor
 					document.getElementById("date").style.color = TextColor
@@ -223,6 +319,7 @@
 			} else {
 				var reg = /^([0-9a-f]{3}){1,2}$/i
 				if (reg.test(loadBGColor) == true) {
+					CustomElements = true
 					BackgroundColor = `#${loadBGColor}`
 					document.body.style.backgroundColor = BackgroundColor
 					document.getElementsByClassName('circle')[0].style.display = "none"
@@ -251,6 +348,17 @@
 		}
 
 		function Time() {
+
+			if (SettingsOpen == true) {
+				document.getElementById("settingsHardReset").oninput = function () { settings("HardReset") };
+				if (HardReset == false) {
+					document.getElementById("settingsHardReset").checked = false
+				} else {
+					document.getElementById("settingsHardReset").checked = true
+				}
+			}
+
+
 			now = new Date()
 			if (AM_PM==false) {
 				CurrentHour = now.getHours()
@@ -270,11 +378,13 @@
 		}
 
 		function UpdateDay() {
-			now = new Date()
-			thisDay = now.getDate()
-			thisMonth = now.getMonth() + 1
-			thisYear = now.getFullYear()
-			document.getElementById("dateContent").innerText = `${thisDay}-${thisMonth}-${thisYear}`
+			if (SettingsOpen == false) {
+				now = new Date()
+				thisDay = now.getDate()
+				thisMonth = now.getMonth() + 1
+				thisYear = now.getFullYear()
+				document.getElementById("dateContent").innerText = `${thisDay}-${thisMonth}-${thisYear}`
+			}
 		}
 
 		function formatAMPM(date) {
@@ -293,28 +403,33 @@
 		}
 
 		function changeTimeFormat() {
+			localStorage.removeItem("time");
 			if (AM_PM==false) {
 				AM_PM = true
 				document.getElementById("clock").classList.remove('far')
 				document.getElementById("clock").classList.add('fas')
+				localStorage.setItem("time", 12)
 				Time()
 				console.log("Now showing 12 hour time format!")
 			} else {
 				AM_PM = false
 				document.getElementById("clock").classList.add('far')
 				document.getElementById("clock").classList.remove('fas')
+				localStorage.setItem("time", 24)
 				Time()
 				console.log("Now showing 24 hour time format!")
 			}
 		}
 
 		function changeColor(LocalColor) {
+			localStorage.removeItem("bg");
 			if (LocalColor == "red") {
 				color = "red"
 				document.body.classList.add("red")
 				document.body.classList.remove("yellow")
 				document.body.classList.remove("green")
 				document.body.classList.remove("blue")
+				localStorage.setItem("bg", "red")
 				console.log("Changed style to red!")
 			} else if (LocalColor == "yellow") {
 				color = "yellow"
@@ -322,6 +437,7 @@
 				document.body.classList.add("yellow")
 				document.body.classList.remove("green")
 				document.body.classList.remove("blue")
+				localStorage.setItem("bg", "yellow")
 				console.log("Changed style to yellow!")
 			} else if (LocalColor == "green") {
 				color = "green"
@@ -329,6 +445,7 @@
 				document.body.classList.remove("yellow")
 				document.body.classList.add("green")
 				document.body.classList.remove("blue")
+				localStorage.setItem("bg", "green")
 				console.log("Changed style to green!")
 			} else if (LocalColor == "blue") {
 				color = "blue"
@@ -336,6 +453,7 @@
 				document.body.classList.remove("yellow")
 				document.body.classList.remove("green")
 				document.body.classList.add("blue")
+				localStorage.setItem("bg", "blue")
 				console.log("Changed style to blue!")
 			} else if (LocalColor == "white") {
 				color = "white"
@@ -343,60 +461,72 @@
 				document.body.classList.remove("yellow")
 				document.body.classList.remove("green")
 				document.body.classList.remove("blue")
+				localStorage.setItem("bg", "white")
 				console.log("Reset style!")
 			}
 		}
 
 		function changeFont() {
+			localStorage.removeItem("font")
 			if (font==0) {
 				document.getElementById("time").style.fontFamily = "Smooch Sans, sans-serif"
 				document.getElementById("date").style.fontFamily = "Smooch Sans, sans-serif"
 				console.log("Font is now Smooch Sans")
+				localStorage.setItem("font", "SS")
 				font++
 			} else if (font == 1) {
 				document.getElementById("time").style.fontFamily = "Playfair Display, sans-serif"
 				document.getElementById("date").style.fontFamily = "Playfair Display, sans-serif"
 				console.log("Font is now Playfair Display")
+				localStorage.setItem("font", "PD")
 				font++
 			} else if (font == 2) {
 				document.getElementById("time").style.fontFamily = "Arvo, serif"
 				document.getElementById("date").style.fontFamily = "Arvo, serif"
 				console.log("Font is now Arvo")
+				localStorage.setItem("font", "Av")
 				font++
 			} else if (font == 3) {
 				document.getElementById("time").style.fontFamily = "Staatliches, cursive"
 				document.getElementById("date").style.fontFamily = "Staatliches, cursive"
 				console.log("Font is now Staatliches")
+				localStorage.setItem("font", "Sl")
 				font++
 			} else if (font == 4) {
 				document.getElementById("time").style.fontFamily = "MinecraftiaRegular, cursive"
 				document.getElementById("date").style.fontFamily = "MinecraftiaRegular, cursive"
 				console.log("Font is now Minecraftia")
+				localStorage.setItem("font", "Mc")
 				font++
 			} else if (font == 5) {
 				document.getElementById("time").style.fontFamily = "Caveat, cursive"
 				document.getElementById("date").style.fontFamily = "Caveat, cursive"
 				console.log("Font is now Caveat")
+				localStorage.setItem("font", "Cv")
 				font++
 			} else if (font == 6) {
 				document.getElementById("time").style.fontFamily = "Sacramento, cursive"
 				document.getElementById("date").style.fontFamily = "Sacramento, cursive"
 				console.log("Font is now Sacramento")
+				localStorage.setItem("font", "Sm")
 				font++
 			} else if (font == 7) {
 				document.getElementById("time").style.fontFamily = "IBM Plex Mono, monospace"
 				document.getElementById("date").style.fontFamily = "IBM Plex Mono, monospace"
 				console.log("Font is now IBM Plex Mono")
+				localStorage.setItem("font", "IBM")
 				font++
 			} else if (font == 8) {
 				document.getElementById("time").style.fontFamily = "Fira Code, monospace"
 				document.getElementById("date").style.fontFamily = "Fira Code, monospace"
 				console.log("Font is now Fira Code")
+				localStorage.setItem("font", "FC")
 				font++
 			} else if (font == 9) {
 				document.getElementById("time").style.fontFamily = "Open Sans, sans-serif"
 				document.getElementById("date").style.fontFamily = "Open Sans, sans-serif"
 				console.log("Font is now reset (Open Sans)")
+				localStorage.setItem("font", "OS")
 				font = 0
 			}
 		}
@@ -458,6 +588,46 @@
 			}
 			// alert(`${BaseURL}${ShareURL_1}${ShareURL_2}${ShareURL_3}`)
 			copy(`${BaseURL}${ShareURL_1}${ShareURL_2}${ShareURL_3}`)
+		}
+
+		function settings(command) {
+			if (command == null) {
+				if (SettingsOpen == false) {
+					SettingsOpen = true
+					UpdateDay()
+					document.getElementById("date").innerHTML = `<div class='AlignItems'>
+						<p class='regular'>Do not apply local settings
+							<form action='settings("HardReset")'>
+								<label class='switch'><input id='settingsHardReset' type='checkbox'>
+									<span class='slider round'></span>
+								</label>
+							</form>
+						</p>
+					</div>
+					<div class='AlignItems'>
+						<a style="text-decoration: none" href="javascript:settings('DeleteAll')"><p class='regular danger'>Delete stored data</p></a>
+					</div>`
+				} else {
+					SettingsOpen = false
+					document.getElementById("date").innerHTML = '<span id="dateContent">DD/MM/YY</span> <span class="tooltiptext">DD/MM/YY</span>'
+					UpdateDay()
+				}
+			} else if (command == "HardReset") {
+				var HardResetFile = localStorage.getItem("HardReset")
+				console.log(`HardReset status: ${HardResetFile}`)
+				if (HardResetFile == "true") {
+					HardReset = false
+					localStorage.removeItem("HardReset");
+					localStorage.setItem("HardReset", "false")
+				} else {
+					HardReset = true
+					localStorage.removeItem("HardReset");
+					localStorage.setItem("HardReset", "true")
+				}
+			} else if (command == "DeleteAll") {
+				localStorage.clear()
+				window.location.replace(`${BaseURL}?alert=Cleared stored data!`)
+			}
 		}
 
 		function WebFontError() {
