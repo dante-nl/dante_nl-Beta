@@ -36,22 +36,28 @@
 				onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>
 		</p>
 
-		<a href="javascript:generateURL()">Copy URL</a>
+		<!-- <a href="javascript:generateURL()">Copy URL</a> -->
 		<br>
-		<a href="javascript:changeColor('red')" style="background-color: #FFADAD" class="circle"></a>
-		<a href="javascript:changeColor('yellow')" style="background-color: #FDFFB6" class="circle"></a>
-		<a href="javascript:changeColor('green')" style="background-color: #CAFFBF" class="circle"></a>
-		<a href="javascript:changeColor('blue')" style="background-color: #A0C4FF" class="circle"></a>
-		<a href="javascript:changeColor('white')" style="background-color: #ccc" class="circle"></a>
+		<div style="display:flex;justify-content:center;align-items:center;">
+			<a id="share" href="javascript:generateURL()" class="fas fa-share-alt fa-xl icon"></a>
+
+			<a href="javascript:changeColor('red')" style="background-color: #FFADAD" class="circle"></a>
+			<a href="javascript:changeColor('yellow')" style="background-color: #FDFFB6" class="circle"></a>
+			<a href="javascript:changeColor('green')" style="background-color: #CAFFBF" class="circle"></a>
+			<a href="javascript:changeColor('blue')" style="background-color: #A0C4FF" class="circle"></a>
+			<a href="javascript:changeColor('white')" style="background-color: #ccc" class="circle"></a>
+
+			<a href="javascript:openURL()" class="fas fa-external-link-alt icon fa-xl"></a>
+		</div>
 	</div>
 	<div id="col-2">
 		<div class="clock">
 			<h1>
 				<a id="time">13:34:25</a>
-				<p class="icon tooltip" id="date"><span id="dateContent">DD/MM/YY</span> <span class="tooltiptext">DD/MM/YY</span></p>
+				<p class="tooltip" id="date"><span id="dateContent">DD/MM/YY</span> <span class="tooltiptext">DD/MM/YY</span></p>
 			</h1>
 		</div>
-		<h1><a id="clock" href="javascript:changeTimeFormat()" class="far fa-clock fa-sm icon"></a></h1>
+		<h1><a id="clock" href="javascript:changeTimeFormat()" class="far fa-clock fa-sm"></a></h1>
 	</div>
 
 
@@ -68,6 +74,7 @@
 				FontName = document.getElementById("FontInput").value
 				if (FontName == null || FontName == "") {
 					document.getElementById("time").style.fontFamily = `Open Sans, sans-serif`
+					document.getElementById("date").style.fontFamily = `Open Sans, sans-serif`
 					CustomFont = null
 					font = 0
 				} else {
@@ -80,6 +87,7 @@
 						},
 					});
 					document.getElementById("time").style.fontFamily = `${FontName}, sans-serif`
+					document.getElementById("date").style.fontFamily = `${FontName}, sans-serif`
 					CustomFont = FontName
 					font = "custom"
 					console.log(`Font is now a custom font. (${FontName}) Fonts loaded with WebFontLoader`)
@@ -139,6 +147,24 @@
 			Part3_URL = `&textcolor=${TextColor}`
 			Part4_URL = `&bgcolor=${BackgroundColor}`
 			copy(`${baseURL}${Part1_URL}${Part2_URL}${Part3_URL}${Part4_URL}`)
+		}
+
+		function openURL() {
+			// baseURL = "http://127.0.0.1:5500/index.html"
+			baseURL = "https://beta.dantenl.tk"
+			if (font == 0) {
+				Part1_URL = "?font=OS"
+			} else {
+				Part1_URL = `?customfont=${CustomFont}`
+			}
+			if (AM_PM == true) {
+				Part2_URL = "&time=12"
+			} else {
+				Part2_URL = "&time=24"
+			}
+			Part3_URL = `&textcolor=${TextColor}`
+			Part4_URL = `&bgcolor=${BackgroundColor}`
+			window.open(`${baseURL}${Part1_URL}${Part2_URL}${Part3_URL}${Part4_URL}`);
 		}
 
 		function WebFontError() {
