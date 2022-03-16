@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="style.css">
 	<script src="https://kit.fontawesome.com/ee422b4c3c.js" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+	<script type='text/javascript' src='https://cdn.dantenl.tk/tinycolor.js'></script>
 	<title>Advanced Options - Custime</title>
 </head>
 <body onload="load()">
@@ -17,19 +18,25 @@
 		<form action="javascript:readInput('font')">
 			<label for="font-url">Font name: </label>
 			<input type="text" name="font-url" id="FontInput" placeholder="Open Sans">
-			<input type="submit" value="Apply font">
+			<button>
+				<i class="fas fa-arrow-alt-circle-right"></i>
+			</button>
 		</form>
 
 		<form action="javascript:readInput('text_color')">
 			<label for="color">Text color: </label>
 			<input type="text" name="color" id="ColorInput" placeholder="#000000">
-			<input type="submit" value="Apply text color">
+			<button>
+				<i class="fas fa-arrow-alt-circle-right"></i>
+			</button>
 		</form>
 
 		<form action="javascript:readInput('background_color')">
 			<label for="color">Background color: </label>
 			<input type="text" name="color2" id="ColorInput2" placeholder="#FFF">
-			<input type="submit" value="Apply background color color">
+			<button>
+				<i class="fas fa-arrow-alt-circle-right"></i>
+			</button>
 		</form>
 
 		<p id="copyConfirm" class="hideText pill">Copied URL! <span class="close"
@@ -54,7 +61,7 @@
 		<div class="clock">
 			<h1>
 				<a id="time">13:34:25</a>
-				<p class="tooltip" id="date"><span id="dateContent">DD/MM/YY</span> <span class="tooltiptext">DD/MM/YY</span></p>
+				<p class="tooltip" id="date"><span id="dateContent">16-3-2022</span> <span class="tooltiptext">DD/MM/YY</span></p>
 			</h1>
 		</div>
 		<h1><a id="clock" href="javascript:changeTimeFormat()" class="far fa-clock fa-sm"></a></h1>
@@ -63,10 +70,16 @@
 
 	<script>
 		function load() {
+			baseURL = "http://127.0.0.1:5500/index.html"
+			// baseURL = "https://beta.dantenl.tk"
 			font = 0
 			BackgroundColor = "fff"
 			TextColor = "000"
 			AM_PM = false
+			if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+				// Mobile device
+				window.location.replace(`${baseURL}?alert=Advanced editor not supported on mobile devices`)
+			}
 		}
 
 		function readInput(intention) {
@@ -96,12 +109,20 @@
 			else if (intention == "text_color") {
 				HexColor = document.getElementById("ColorInput").value
 				if (HexColor == null || HexColor == "") {
-					document.getElementById("time").style.color = "000000"
+					document.getElementById("time").style.color = "#000000"
+					document.getElementById("date").style.color = "#000000"
+					document.getElementById("clock").style.color = "#000"
 					TextColor = "000"
 				} else {
 					var reg = /^#([0-9a-f]{3}){1,2}$/i
 					if (reg.test(HexColor) == true) {
 						document.getElementById("time").style.color = HexColor
+						document.getElementById("date").style.color = HexColor
+						if (tinycolor(HexColor).isLight() == true) {
+							document.getElementById("clock").style.color = pSBC(-0.05, HexColor);
+						} else {
+							document.getElementById("clock").style.color = pSBC(0.05, HexColor); 
+						}
 						TextColor = HexColor.replace(/#/g, "")
 					} else {
 						document.getElementById("copyConfirm").innerHTML = `That is not a valid hex color! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
@@ -132,8 +153,6 @@
 		}
 
 		function generateURL() {
-			// baseURL = "http://127.0.0.1:5500/index.html"
-			baseURL = "https://beta.dantenl.tk"
 			if (font == 0) {
 				Part1_URL = "?font=OS"
 			} else {
@@ -150,8 +169,6 @@
 		}
 
 		function openURL() {
-			// baseURL = "http://127.0.0.1:5500/index.html"
-			baseURL = "https://beta.dantenl.tk"
 			if (font == 0) {
 				Part1_URL = "?font=OS"
 			} else {
@@ -236,6 +253,32 @@
 				document.getElementById("clock").classList.add('far')
 				document.getElementById("clock").classList.remove('fas')
 			}
+		}
+
+		// Amazing code from Pimp Trizkit at https://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
+		const pSBC = (p, c0, c1, l) => {
+			let r, g, b, P, f, t, h, i = parseInt, m = Math.round, a = typeof (c1) == "string";
+			if (typeof (p) != "number" || p < -1 || p > 1 || typeof (c0) != "string" || (c0[0] != 'r' && c0[0] != '#') || (c1 && !a)) return null;
+			if (!this.pSBCr) this.pSBCr = (d) => {
+				let n = d.length, x = {};
+				if (n > 9) {
+					[r, g, b, a] = d = d.split(","), n = d.length;
+					if (n < 3 || n > 4) return null;
+					x.r = i(r[3] == "a" ? r.slice(5) : r.slice(4)), x.g = i(g), x.b = i(b), x.a = a ? parseFloat(a) : -1
+				} else {
+					if (n == 8 || n == 6 || n < 4) return null;
+					if (n < 6) d = "#" + d[1] + d[1] + d[2] + d[2] + d[3] + d[3] + (n > 4 ? d[4] + d[4] : "");
+					d = i(d.slice(1), 16);
+					if (n == 9 || n == 5) x.r = d >> 24 & 255, x.g = d >> 16 & 255, x.b = d >> 8 & 255, x.a = m((d & 255) / 0.255) / 1000;
+					else x.r = d >> 16, x.g = d >> 8 & 255, x.b = d & 255, x.a = -1					} return x
+			};
+			h = c0.length > 9, h = a ? c1.length > 9 ? true : c1 == "c" ? !h : false : h, f = this.pSBCr(c0), P = p < 0, t = c1 && c1 != "c" ? this.pSBCr(c1) : P ? { r: 0, g: 0, b: 0, a: -1 } : { r: 255, g: 255, b: 255, a: -1 }, p = P ? p * -1 : p, P = 1 - p;
+			if (!f || !t) return null;
+			if (l) r = m(P * f.r + p * t.r), g = m(P * f.g + p * t.g), b = m(P * f.b + p * t.b);
+			else r = m((P * f.r ** 2 + p * t.r ** 2) ** 0.5), g = m((P * f.g ** 2 + p * t.g ** 2) ** 0.5), b = m((P * f.b ** 2 + p * t.b ** 2) ** 0.5);
+			a = f.a, t = t.a, f = a >= 0 || t >= 0, a = f ? a < 0 ? t : t < 0 ? a : a * P + t * p : 0;
+			if (h) return "rgb" + (f ? "a(" : "(") + r + "," + g + "," + b + (f ? "," + m(a * 1000) / 1000 : "") + ")";
+			else return "#" + (4294967296 + r * 16777216 + g * 65536 + b * 256 + (f ? m(a * 255) : 0)).toString(16).slice(1, f ? undefined : -2)
 		}
 	</script>
 </body>
