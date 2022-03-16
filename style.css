@@ -130,12 +130,16 @@ body {
 	display: inline-block;
   	vertical-align: middle;
 	margin: 2px;
+	text-decoration: none;
+	color: #000
 }
 
 .fas {
 	display: inline-block;
   	vertical-align: middle;
 	margin: 2px;
+	text-decoration: none;
+	color: #000
 }
 
 .pill {
@@ -285,19 +289,43 @@ body {
 	color: #996868;
 }
 
+.red-a .icon {
+	color: #996868 !important;
+	text-decoration: none;
+}
+
+
 .yellow-a #col-1 {
 	color: #98996D;
 	background-color: #FDFFB6;
 }
+
+.yellow-a .icon {
+	color: #98996D !important;
+	text-decoration: none;
+}
+
 
 .green-a #col-1 {
 	color: #799973;
 	background-color: #CAFFBF;
 }
 
+.green-a .icon {
+	color: #799973 !important;
+	text-decoration: none;
+}
+
+
+
 .blue-a #col-1 {
 	color: #607699;
 	background-color: #A0C4FF;
+}
+
+.blue-a .icon {
+	color: #607699 !important;
+	text-decoration: none;
 }
 
 /* --------------- */
