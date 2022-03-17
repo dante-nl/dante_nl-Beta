@@ -5,14 +5,20 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta property="og:type" content="website" />
-	<meta property="og:description" content="Currently doing some testing with this description, seeing if I can change it and make it variable! - 4Que">
+	<!-- <meta property="og:description" content="Currently doing some testing with this description, seeing if I can change it and make it variable! - 4Que"> -->
 	<link rel="stylesheet" href="style.css">
 	<script src="https://kit.fontawesome.com/ee422b4c3c.js" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
 	<script type='text/javascript' src='https://cdn.dantenl.tk/tinycolor.js'></script>
 	<title>Custime</title>
-	<script>
+	<!-- <script>
 		document.getElementsByTagName('meta')["og:description"].content = "Hey! This is a test, and if you see this, it was a success! :D"
+	</script> -->
+	<script>
+		var desc = document.createElement('meta'); 
+		desc.setAttribute('property', 'og:description'); 
+		desc.content = "Hey! This is a test, and if you see this, it was a success! :D"; 
+		document.getElementsByTagName('head')[0].appendChild(dec);
 	</script>
 </head>
 <body onload="load()">
