@@ -12,8 +12,9 @@
 	<script>
 		// document.querySelector('meta[name="og:description"]').setAttribute(`content! Current Hour: ${CurrentHour}`, _desc);
 		// ^ Make it work! Has to say things such as time, background color and font if they're set, otherwise a default description
-		document.head.children.namedItem('og:description').content = "Hey! This is a test, and if you see this, it was a success! :D"
-	</script>
+		// document.head.children.namedItem('og:description').content = "Hey! This is a test, and if you see this, it was a success! :D"
+		document.querySelector('meta[property="og:description"]').setAttribute("content", "Hey! This is a test, and if you see this, it was a success! :D");
+</script>
 	<title>Custime</title>
 </head>
 <body onload="load()">
