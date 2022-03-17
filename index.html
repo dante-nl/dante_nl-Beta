@@ -4,12 +4,15 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta property="og:description" content="MQAq">
+	<meta property="og:description" content="Currently doing some testing with this description, seeing if I can change it and make it variable! - xjOm">
 	<link rel="stylesheet" href="style.css">
 	<script src="https://kit.fontawesome.com/ee422b4c3c.js" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
 	<script type='text/javascript' src='https://cdn.dantenl.tk/tinycolor.js'></script>
 	<title>Custime</title>
+	<script>
+		document.getElementsByTagName('meta')["og:description"].content = "Hey! This is a test, and if you see this, it was a success! :D"
+	</script>
 </head>
 <body onload="load()">
 	<div class="clock">
@@ -43,7 +46,6 @@
 		properly! <i>This text is not part of the page, and is just directly pasted on top of it)</i>
 	<script>
 		function load() {
-			document.querySelector('meta[property="og:description"]').setAttribute("content", "Hey! This is a test, and if you see this, it was a success! :D");
 			if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 				// Mobile device
 				console.log("Hey mobile user! You get the special VIP treatment with some cool new styles")
