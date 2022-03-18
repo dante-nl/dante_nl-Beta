@@ -178,14 +178,12 @@
 			const queryString = new URLSearchParams(window.location.search)
 			const loadTime = queryString.get('time')
 			if (loadTime == "12") {
-				customElements = true
 				AM_PM = true
 				document.getElementById("clock").classList.remove('far')
 				document.getElementById("clock").classList.add('fas')
 				Time()
 				console.log("Now showing 12 hour time format!")
 			} else {
-				customElements = true
 				AM_PM = false
 				document.getElementById("clock").classList.add('far')
 				document.getElementById("clock").classList.remove('fas')
@@ -194,7 +192,6 @@
 			}
 			const loadBG = queryString.get('bg')
 			if (loadBG == "r") {
-				customElements = true
 				color = "red"
 				document.body.classList.add("red")
 				document.body.classList.remove("yellow")
@@ -202,7 +199,6 @@
 				document.body.classList.remove("blue")
 				console.log("Changed style to red!")
 			} else if (loadBG == "y") {
-				customElements = true
 				color = "yellow"
 				document.body.classList.remove("red")
 				document.body.classList.add("yellow")
@@ -210,7 +206,6 @@
 				document.body.classList.remove("blue")
 				console.log("Changed style to yellow!")
 			} else if (loadBG == "g") {
-				customElements = true
 				color = "green"
 				document.body.classList.remove("red")
 				document.body.classList.remove("yellow")
@@ -218,7 +213,6 @@
 				document.body.classList.remove("blue")
 				console.log("Changed style to green!")
 			} else if (loadBG == "b") {
-				customElements = true
 				color = "blue"
 				document.body.classList.remove("red")
 				document.body.classList.remove("yellow")
@@ -226,7 +220,6 @@
 				document.body.classList.add("blue")
 				console.log("Changed style to blue!")
 			} else {
-				customElements = true
 				color = "white"
 				document.body.classList.remove("red")
 				document.body.classList.remove("yellow")
@@ -236,61 +229,51 @@
 			}
 			const loadFont = queryString.get('font') 
 			if (loadFont == "SS") {
-				customElements = true
 				document.getElementById("time").style.fontFamily = "Smooch Sans, sans-serif"
 				document.getElementById("date").style.fontFamily = "Smooch Sans, sans-serif"
 				console.log("Font is now Smooch Sans")
 				font = 1
 			} else if (loadFont == "PD") {
-				customElements = true
 				document.getElementById("time").style.fontFamily = "Playfair Display, sans-serif"
 				document.getElementById("date").style.fontFamily = "Playfair Display, sans-serif"
 				console.log("Font is now Playfair Display")
 				font = 2
 			} else if (loadFont == "Av") {
-				customElements = true
 				document.getElementById("time").style.fontFamily = "Arvo, serif"
 				document.getElementById("date").style.fontFamily = "Arvo, serif"
 				console.log("Font is now Arvo")
 				font = 3
 			} else if (loadFont == "Sl") {
-				customElements = true
 				document.getElementById("time").style.fontFamily = "Staatliches, cursive"
 				document.getElementById("date").style.fontFamily = "Staatliches, cursive"
 				console.log("Font is now Staatliches")
 				font = 4
 			} else if (loadFont == "Mc") {
-				customElements = true
 				document.getElementById("time").style.fontFamily = "MinecraftiaRegular, cursive"
 				document.getElementById("date").style.fontFamily = "MinecraftiaRegular, cursive"
 				console.log("Font is now Minecraftia")
 				font = 5
 			} else if (loadFont == "Cv") {
-				customElements = true
 				document.getElementById("time").style.fontFamily = "Caveat, cursive"
 				document.getElementById("date").style.fontFamily = "Caveat, cursive"
 				console.log("Font is now Caveat")
 				font = 6
 			} else if (loadFont == "Sm") {
-				customElements = true
 				document.getElementById("time").style.fontFamily = "Sacramento, cursive"
 				document.getElementById("date").style.fontFamily = "Sacramento, cursive"
 				console.log("Font is now Sacramento")
 				font = 7
 			} else if (loadFont == "PM") {
-				customElements = true
 				document.getElementById("time").style.fontFamily = "IBM Plex Mono, monospace"
 				document.getElementById("date").style.fontFamily = "IBM Plex Mono, monospace"
 				console.log("Font is now IBM Plex Mono")
 				font = 8
 			} else if (loadFont == "FC") {
-				customElements = true
 				document.getElementById("time").style.fontFamily = "Fira Code, monospace"
 				document.getElementById("date").style.fontFamily = "Fira Code, monospace"
 				console.log("Font is now Fira Code")
 				font = 9
 			} else {
-				customElements = true
 				document.getElementById("time").style.fontFamily = "Open Sans, sans-serif"
 				document.getElementById("date").style.fontFamily = "Open Sans, sans-serif"
 				console.log("Font is now the default (Open Sans)")
@@ -432,40 +415,33 @@
 		}
 
 		function changeTimeFormat() {
+			localStorage.removeItem("time");
 			if (AM_PM==false) {
 				AM_PM = true
 				document.getElementById("clock").classList.remove('far')
 				document.getElementById("clock").classList.add('fas')
-				if (customElements == false) {
-					localStorage.removeItem("time");
-					localStorage.setItem("time", 12)
-				}
+				localStorage.setItem("time", 12)
 				Time()
 				console.log("Now showing 12 hour time format!")
 			} else {
 				AM_PM = false
 				document.getElementById("clock").classList.add('far')
 				document.getElementById("clock").classList.remove('fas')
-				if (customElements == false) {
-					localStorage.removeItem("time");
-					localStorage.setItem("time", 24)
-				}
+				localStorage.setItem("time", 24)
 				Time()
 				console.log("Now showing 24 hour time format!")
 			}
 		}
 
 		function changeColor(LocalColor) {
+			localStorage.removeItem("bg");
 			if (LocalColor == "red") {
 				color = "red"
 				document.body.classList.add("red")
 				document.body.classList.remove("yellow")
 				document.body.classList.remove("green")
 				document.body.classList.remove("blue")
-				if (customElements == false) {
-					localStorage.removeItem("bg");
-					localStorage.setItem("bg", "red")
-				}
+				localStorage.setItem("bg", "red")
 				console.log("Changed style to red!")
 			} else if (LocalColor == "yellow") {
 				color = "yellow"
@@ -473,10 +449,7 @@
 				document.body.classList.add("yellow")
 				document.body.classList.remove("green")
 				document.body.classList.remove("blue")
-				if (customElements == false) {
-					localStorage.removeItem("bg");
-					localStorage.setItem("bg", "yellow")
-				}
+				localStorage.setItem("bg", "yellow")
 				console.log("Changed style to yellow!")
 			} else if (LocalColor == "green") {
 				color = "green"
@@ -484,10 +457,7 @@
 				document.body.classList.remove("yellow")
 				document.body.classList.add("green")
 				document.body.classList.remove("blue")
-				if (customElements == false) {
-					localStorage.removeItem("bg");
-					localStorage.setItem("bg", "green")
-				}
+				localStorage.setItem("bg", "green")
 				console.log("Changed style to green!")
 			} else if (LocalColor == "blue") {
 				color = "blue"
@@ -495,10 +465,7 @@
 				document.body.classList.remove("yellow")
 				document.body.classList.remove("green")
 				document.body.classList.add("blue")
-				if (customElements == false) {
-					localStorage.removeItem("bg");
-					localStorage.setItem("bg", "blue")
-				}
+				localStorage.setItem("bg", "blue")
 				console.log("Changed style to blue!")
 			} else if (LocalColor == "white") {
 				color = "white"
@@ -506,104 +473,72 @@
 				document.body.classList.remove("yellow")
 				document.body.classList.remove("green")
 				document.body.classList.remove("blue")
-				if (customElements == false) {
-					localStorage.removeItem("bg");
-					localStorage.setItem("bg", "white")
-				}
+				localStorage.setItem("bg", "white")
 				console.log("Reset style!")
 			}
 		}
 
 		function changeFont() {
+			localStorage.removeItem("font")
 			if (font==0) {
 				document.getElementById("time").style.fontFamily = "Smooch Sans, sans-serif"
 				document.getElementById("date").style.fontFamily = "Smooch Sans, sans-serif"
 				console.log("Font is now Smooch Sans")
-				if (customElements == false) {
-					localStorage.removeItem("font")
-					localStorage.setItem("font", "SS")
-				}
+				localStorage.setItem("font", "SS")
 				font++
 			} else if (font == 1) {
 				document.getElementById("time").style.fontFamily = "Playfair Display, sans-serif"
 				document.getElementById("date").style.fontFamily = "Playfair Display, sans-serif"
 				console.log("Font is now Playfair Display")
-				if (customElements == false) {
-					localStorage.removeItem("font")
-					localStorage.setItem("font", "PD")
-				}
+				localStorage.setItem("font", "PD")
 				font++
 			} else if (font == 2) {
 				document.getElementById("time").style.fontFamily = "Arvo, serif"
 				document.getElementById("date").style.fontFamily = "Arvo, serif"
 				console.log("Font is now Arvo")
-				if (customElements == false) {
-					localStorage.removeItem("font")
-					localStorage.setItem("font", "Av")
-				}
+				localStorage.setItem("font", "Av")
 				font++
 			} else if (font == 3) {
 				document.getElementById("time").style.fontFamily = "Staatliches, cursive"
 				document.getElementById("date").style.fontFamily = "Staatliches, cursive"
 				console.log("Font is now Staatliches")
-				if (customElements == false) {
-					localStorage.removeItem("font")
-					localStorage.setItem("font", "Sl")
-				}
+				localStorage.setItem("font", "Sl")
 				font++
 			} else if (font == 4) {
 				document.getElementById("time").style.fontFamily = "MinecraftiaRegular, cursive"
 				document.getElementById("date").style.fontFamily = "MinecraftiaRegular, cursive"
 				console.log("Font is now Minecraftia")
-				if (customElements == false) {
-					localStorage.removeItem("font")
-					localStorage.setItem("font", "Mc")
-				}
+				localStorage.setItem("font", "Mc")
 				font++
 			} else if (font == 5) {
 				document.getElementById("time").style.fontFamily = "Caveat, cursive"
 				document.getElementById("date").style.fontFamily = "Caveat, cursive"
 				console.log("Font is now Caveat")
-				if (customElements == false) {
-					localStorage.removeItem("font")
-					localStorage.setItem("font", "Cv")
-				}
+				localStorage.setItem("font", "Cv")
 				font++
 			} else if (font == 6) {
 				document.getElementById("time").style.fontFamily = "Sacramento, cursive"
 				document.getElementById("date").style.fontFamily = "Sacramento, cursive"
 				console.log("Font is now Sacramento")
-				if (customElements == false) {
-					localStorage.removeItem("font")
-					localStorage.setItem("font", "Sm")
-				}
+				localStorage.setItem("font", "Sm")
 				font++
 			} else if (font == 7) {
 				document.getElementById("time").style.fontFamily = "IBM Plex Mono, monospace"
 				document.getElementById("date").style.fontFamily = "IBM Plex Mono, monospace"
 				console.log("Font is now IBM Plex Mono")
-				if (customElements == false) {
-					localStorage.removeItem("font")
-					localStorage.setItem("font", "IBM")
-				}
+				localStorage.setItem("font", "IBM")
 				font++
 			} else if (font == 8) {
 				document.getElementById("time").style.fontFamily = "Fira Code, monospace"
 				document.getElementById("date").style.fontFamily = "Fira Code, monospace"
 				console.log("Font is now Fira Code")
-				if (customElements == false) {
-					localStorage.removeItem("font")
-					localStorage.setItem("font", "FC")
-				}
+				localStorage.setItem("font", "FC")
 				font++
 			} else if (font == 9) {
 				document.getElementById("time").style.fontFamily = "Open Sans, sans-serif"
 				document.getElementById("date").style.fontFamily = "Open Sans, sans-serif"
 				console.log("Font is now reset (Open Sans)")
-				if (customElements == false) {
-					localStorage.removeItem("font")
-					localStorage.setItem("font", "OS")
-				}
+				localStorage.setItem("font", "OS")
 				font = 0
 			}
 		}
