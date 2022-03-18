@@ -281,20 +281,29 @@
 			}
 			const loadCustomFont = queryString.get('customfont')
 			if (loadCustomFont != null) {
-				WebFont.load({
-					google: {
-						families: [`${loadCustomFont}:400`]
-					},
-					inactive: function () {
-						WebFontError()
-					},
-				});
-				CustomElements = true
-				document.getElementById("time").style.fontFamily = `${loadCustomFont}, sans-serif`
-				document.getElementById("date").style.fontFamily = `${loadCustomFont}, sans-serif`
-				CustomFont = loadCustomFont
-				font = "custom"
-				console.log(`Font is now a custom font. (${loadCustomFont}) Fonts loaded with WebFontLoader`)
+				if (loadCustomFont == "Barlow Black") {
+					CustomElements = true
+					document.getElementById("time").style.fontFamily = `Barlow Black, sans-serif`
+					document.getElementById("date").style.fontFamily = `Barlow Black, sans-serif`
+					CustomFont = loadCustomFont
+					font = "custom"
+					console.log(`Font is now Barlow Black. Font loaded from LuckUnstoppable7's CDN`)
+				} else {
+					WebFont.load({
+						google: {
+							families: [`${loadCustomFont}:400`]
+						},
+						inactive: function () {
+							WebFontError()
+						},
+					});
+					CustomElements = true
+					document.getElementById("time").style.fontFamily = `${loadCustomFont}, sans-serif`
+					document.getElementById("date").style.fontFamily = `${loadCustomFont}, sans-serif`
+					CustomFont = loadCustomFont
+					font = "custom"
+					console.log(`Font is now a custom font. (${loadCustomFont}) Fonts loaded with WebFontLoader`)
+				}
 			}
 
 			const loadTextColor = queryString.get('textcolor')
@@ -479,67 +488,69 @@
 		}
 
 		function changeFont() {
-			localStorage.removeItem("font")
-			if (font==0) {
-				document.getElementById("time").style.fontFamily = "Smooch Sans, sans-serif"
-				document.getElementById("date").style.fontFamily = "Smooch Sans, sans-serif"
-				console.log("Font is now Smooch Sans")
-				localStorage.setItem("font", "SS")
-				font++
-			} else if (font == 1) {
-				document.getElementById("time").style.fontFamily = "Playfair Display, sans-serif"
-				document.getElementById("date").style.fontFamily = "Playfair Display, sans-serif"
-				console.log("Font is now Playfair Display")
-				localStorage.setItem("font", "PD")
-				font++
-			} else if (font == 2) {
-				document.getElementById("time").style.fontFamily = "Arvo, serif"
-				document.getElementById("date").style.fontFamily = "Arvo, serif"
-				console.log("Font is now Arvo")
-				localStorage.setItem("font", "Av")
-				font++
-			} else if (font == 3) {
-				document.getElementById("time").style.fontFamily = "Staatliches, cursive"
-				document.getElementById("date").style.fontFamily = "Staatliches, cursive"
-				console.log("Font is now Staatliches")
-				localStorage.setItem("font", "Sl")
-				font++
-			} else if (font == 4) {
-				document.getElementById("time").style.fontFamily = "MinecraftiaRegular, cursive"
-				document.getElementById("date").style.fontFamily = "MinecraftiaRegular, cursive"
-				console.log("Font is now Minecraftia")
-				localStorage.setItem("font", "Mc")
-				font++
-			} else if (font == 5) {
-				document.getElementById("time").style.fontFamily = "Caveat, cursive"
-				document.getElementById("date").style.fontFamily = "Caveat, cursive"
-				console.log("Font is now Caveat")
-				localStorage.setItem("font", "Cv")
-				font++
-			} else if (font == 6) {
-				document.getElementById("time").style.fontFamily = "Sacramento, cursive"
-				document.getElementById("date").style.fontFamily = "Sacramento, cursive"
-				console.log("Font is now Sacramento")
-				localStorage.setItem("font", "Sm")
-				font++
-			} else if (font == 7) {
-				document.getElementById("time").style.fontFamily = "IBM Plex Mono, monospace"
-				document.getElementById("date").style.fontFamily = "IBM Plex Mono, monospace"
-				console.log("Font is now IBM Plex Mono")
-				localStorage.setItem("font", "IBM")
-				font++
-			} else if (font == 8) {
-				document.getElementById("time").style.fontFamily = "Fira Code, monospace"
-				document.getElementById("date").style.fontFamily = "Fira Code, monospace"
-				console.log("Font is now Fira Code")
-				localStorage.setItem("font", "FC")
-				font++
-			} else if (font == 9) {
-				document.getElementById("time").style.fontFamily = "Open Sans, sans-serif"
-				document.getElementById("date").style.fontFamily = "Open Sans, sans-serif"
-				console.log("Font is now reset (Open Sans)")
-				localStorage.setItem("font", "OS")
-				font = 0
+			if (font != "custom") {
+				localStorage.removeItem("font")
+				if (font==0) {
+					document.getElementById("time").style.fontFamily = "Smooch Sans, sans-serif"
+					document.getElementById("date").style.fontFamily = "Smooch Sans, sans-serif"
+					console.log("Font is now Smooch Sans")
+					localStorage.setItem("font", "SS")
+					font++
+				} else if (font == 1) {
+					document.getElementById("time").style.fontFamily = "Playfair Display, sans-serif"
+					document.getElementById("date").style.fontFamily = "Playfair Display, sans-serif"
+					console.log("Font is now Playfair Display")
+					localStorage.setItem("font", "PD")
+					font++
+				} else if (font == 2) {
+					document.getElementById("time").style.fontFamily = "Arvo, serif"
+					document.getElementById("date").style.fontFamily = "Arvo, serif"
+					console.log("Font is now Arvo")
+					localStorage.setItem("font", "Av")
+					font++
+				} else if (font == 3) {
+					document.getElementById("time").style.fontFamily = "Staatliches, cursive"
+					document.getElementById("date").style.fontFamily = "Staatliches, cursive"
+					console.log("Font is now Staatliches")
+					localStorage.setItem("font", "Sl")
+					font++
+				} else if (font == 4) {
+					document.getElementById("time").style.fontFamily = "MinecraftiaRegular, cursive"
+					document.getElementById("date").style.fontFamily = "MinecraftiaRegular, cursive"
+					console.log("Font is now Minecraftia")
+					localStorage.setItem("font", "Mc")
+					font++
+				} else if (font == 5) {
+					document.getElementById("time").style.fontFamily = "Caveat, cursive"
+					document.getElementById("date").style.fontFamily = "Caveat, cursive"
+					console.log("Font is now Caveat")
+					localStorage.setItem("font", "Cv")
+					font++
+				} else if (font == 6) {
+					document.getElementById("time").style.fontFamily = "Sacramento, cursive"
+					document.getElementById("date").style.fontFamily = "Sacramento, cursive"
+					console.log("Font is now Sacramento")
+					localStorage.setItem("font", "Sm")
+					font++
+				} else if (font == 7) {
+					document.getElementById("time").style.fontFamily = "IBM Plex Mono, monospace"
+					document.getElementById("date").style.fontFamily = "IBM Plex Mono, monospace"
+					console.log("Font is now IBM Plex Mono")
+					localStorage.setItem("font", "IBM")
+					font++
+				} else if (font == 8) {
+					document.getElementById("time").style.fontFamily = "Fira Code, monospace"
+					document.getElementById("date").style.fontFamily = "Fira Code, monospace"
+					console.log("Font is now Fira Code")
+					localStorage.setItem("font", "FC")
+					font++
+				} else if (font == 9) {
+					document.getElementById("time").style.fontFamily = "Open Sans, sans-serif"
+					document.getElementById("date").style.fontFamily = "Open Sans, sans-serif"
+					console.log("Font is now reset (Open Sans)")
+					localStorage.setItem("font", "OS")
+					font = 0
+				}
 			}
 		}
 
