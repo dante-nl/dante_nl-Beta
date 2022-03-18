@@ -91,19 +91,27 @@
 					CustomFont = null
 					font = 0
 				} else {
-					WebFont.load({
-						google: {
-							families: [`${FontName}:400`]
-						},
-						inactive: function () {
-							WebFontError()
-						},
-					});
-					document.getElementById("time").style.fontFamily = `${FontName}, sans-serif`
-					document.getElementById("date").style.fontFamily = `${FontName}, sans-serif`
-					CustomFont = FontName
-					font = "custom"
-					console.log(`Font is now a custom font. (${FontName}) Fonts loaded with WebFontLoader`)
+					if (FontName == "Barlow Black") {
+						document.getElementById("time").style.fontFamily = `Barlow Black, sans-serif`
+						document.getElementById("date").style.fontFamily = `Barlow Black, sans-serif`
+						CustomFont = FontName
+						font = "custom"
+						console.log(`Font is now Barlow Black. Font loaded from LuckUnstoppable7's CDN`)
+					} else {
+						WebFont.load({
+							google: {
+								families: [`${FontName}:400`]
+							},
+							inactive: function () {
+								WebFontError()
+							},
+						});
+						document.getElementById("time").style.fontFamily = `${FontName}, sans-serif`
+						document.getElementById("date").style.fontFamily = `${FontName}, sans-serif`
+						CustomFont = FontName
+						font = "custom"
+						console.log(`Font is now a custom font. (${FontName}) Fonts loaded with WebFontLoader`)
+					}
 				}
 			}
 			else if (intention == "text_color") {
