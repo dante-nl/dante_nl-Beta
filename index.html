@@ -176,6 +176,21 @@
 
 		function LoadStyles() {
 			const queryString = new URLSearchParams(window.location.search)
+
+			const checkRedirect = queryString.get('a')
+			if (checkRedirect == "" || checkRedirect == "true" || checkRedirect == "t") {
+				if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+					document.getElementById("copyConfirm").innerHTML = `Advanced editor not available on mobile devices! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
+					document.getElementById("copyConfirm").classList.remove("hideText")
+					document.getElementById("copyConfirm").classList.add("slide-in")
+				} else {
+					document.getElementById("copyConfirm").innerHTML = `Redirecting to advanced editor... <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
+					document.getElementById("copyConfirm").classList.remove("hideText")
+					document.getElementById("copyConfirm").classList.add("slide-in")
+					window.location.replace(`${BaseURL}/advanced`)
+				}
+			}
+
 			const loadTime = queryString.get('time')
 			if (loadTime == "12") {
 				AM_PM = true
