@@ -52,7 +52,7 @@
 			<a href="javascript:changeColor('yellow')" style="background-color: #FDFFB6" class="circle"></a>
 			<a href="javascript:changeColor('green')" style="background-color: #CAFFBF" class="circle"></a>
 			<a href="javascript:changeColor('blue')" style="background-color: #A0C4FF" class="circle"></a>
-			<a href="javascript:changeColor('white')" style="background-color: #ccc" class="circle"></a>
+			<a href="javascript:changeColor('white')" style="background-color: #e6e6e6" class="circle"></a>
 
 			<a href="javascript:openURL()" class="fas fa-external-link-alt icon fa-xl"></a>
 		</div>
@@ -127,9 +127,9 @@
 						document.getElementById("time").style.color = HexColor
 						document.getElementById("date").style.color = HexColor
 						if (tinycolor(HexColor).isLight() == true) {
-							document.getElementById("clock").style.color = pSBC(-0.05, HexColor);
+							document.getElementById("clock").style.color = pSBC(-0.40, HexColor);
 						} else {
-							document.getElementById("clock").style.color = pSBC(0.05, HexColor); 
+							document.getElementById("clock").style.color = pSBC(0.40, HexColor); 
 						}
 						TextColor = HexColor.replace(/#/g, "")
 					} else {
