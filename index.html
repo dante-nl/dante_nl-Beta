@@ -551,7 +551,7 @@
 					document.getElementById("time").style.fontFamily = "IBM Plex Mono, monospace"
 					document.getElementById("date").style.fontFamily = "IBM Plex Mono, monospace"
 					console.log("Font is now IBM Plex Mono")
-					localStorage.setItem("font", "IBM")
+					localStorage.setItem("font", "PM")
 					font++
 				} else if (font == 8) {
 					document.getElementById("time").style.fontFamily = "Fira Code, monospace"
@@ -622,7 +622,8 @@
 			} else if (font == 9) {
 				ShareURL_3 = "&font=FC"
 			} else if (font == "custom") {
-				ShareURL_3 = `&customfont=${CustomFont}`
+				CustomFontShare = CustomFont.replace(/ +/g, "%20")
+				ShareURL_3 = `&customfont=${CustomFontShare}`
 			}
 			// alert(`${BaseURL}${ShareURL_1}${ShareURL_2}${ShareURL_3}`)
 			copy(`${BaseURL}${ShareURL_1}${ShareURL_2}${ShareURL_3}`)
@@ -633,7 +634,14 @@
 				if (SettingsOpen == false) {
 					SettingsOpen = true
 					UpdateDay()
-					document.getElementById("date").innerHTML = `<div class='AlignItems'>
+					document.getElementById("date").innerHTML = `
+					<div class='AlignItems'>
+						<a style="text-decoration: none;" href="${BaseURL}/advanced" target="_blank">
+							<i class="fas fa-external-link-alt icon"></i>
+							<p class="regular-url">Open advanced editor</a>
+						</a>
+					</div>
+					<div class='AlignItems'>
 						<p class='regular'>Do not apply local settings
 							<form action='settings("HardReset")'>
 								<label class='switch'><input id='settingsHardReset' type='checkbox'>
@@ -643,7 +651,9 @@
 						</p>
 					</div>
 					<div class='AlignItems'>
-						<a style="text-decoration: none" href="javascript:settings('DeleteAll')"><p class='regular danger'>Delete stored data</p></a>
+						<a style="text-decoration: none" href="javascript:settings('DeleteAll')">
+							<p class='regular danger'>Delete stored data</p>
+						</a>
 					</div>`
 				} else {
 					SettingsOpen = false
