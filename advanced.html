@@ -94,7 +94,7 @@
 					if (FontName == "Barlow Black") {
 						document.getElementById("time").style.fontFamily = `Barlow Black, sans-serif`
 						document.getElementById("date").style.fontFamily = `Barlow Black, sans-serif`
-						CustomFont = FontName
+						CustomFont = "Barlow%20Black"
 						font = "custom"
 						console.log(`Font is now Barlow Black. Font loaded from LuckUnstoppable7's CDN`)
 					} else {
@@ -108,9 +108,10 @@
 						});
 						document.getElementById("time").style.fontFamily = `${FontName}, sans-serif`
 						document.getElementById("date").style.fontFamily = `${FontName}, sans-serif`
-						CustomFont = FontName
 						font = "custom"
 						console.log(`Font is now a custom font. (${FontName}) Fonts loaded with WebFontLoader`)
+						FontName = FontName.replace(/ +/g, "%20")
+						CustomFont = FontName
 					}
 				}
 			}
@@ -165,6 +166,7 @@
 				Part1_URL = "?font=OS"
 			} else {
 				Part1_URL = `?customfont=${CustomFont}`
+				console.log(`Part1_URL = ${Part1_URL}`)
 			}
 			if (AM_PM == true) {
 				Part2_URL = "&time=12"
