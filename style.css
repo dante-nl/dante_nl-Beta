@@ -27,6 +27,7 @@ Fonts retrieved from fontslibrary.org:
 
 @import url('https://fonts.googleapis.com/css2?family=Arvo&family=Caveat&family=Fira+Code&family=IBM+Plex+Mono&family=Open+Sans&family=Playfair+Display:ital@1&family=Press+Start+2P&family=Sacramento&family=Smooch+Sans&family=Staatliches&display=swap');
 @import url('https://fontlibrary.org//face/minecraftia');
+@import url('https://cdn.luckvintage.net/public/fonts/barlow-black.css');
 
 /* --------------- */
 /* ⬇️ General Styling */
@@ -72,7 +73,17 @@ body {
 
 .regular {
 	font-size: 100%;
+	text-decoration: none;
 }
+
+.regular-url {
+	font-size: 100%;
+	text-decoration: none;
+}
+.regular-url:hover {
+	text-decoration: underline !important;
+}
+
 
 .icon {
 	color: #000;
@@ -351,7 +362,7 @@ input:checked + .slider:before {
   width: 40%;
   float: left;
   height: 100%;
-  background-color: #ccc;
+  background-color: #e6e6e6;
   z-index: 1010101010
 }
 
