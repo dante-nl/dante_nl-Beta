@@ -28,13 +28,21 @@
 </head>
 <body onload="load()">
 	<div class="clock">
-		<h1><a href="javascript:changeFont()" id="time"><div class="spinner">
-			<div class="rect1"></div>
-			<div class="rect2"></div>
-			<div class="rect3"></div>
-			<div class="rect4"></div>
-			<div class="rect5"></div>
-		</div></a><p class="icon tooltip" id="date"><span id="dateContent">DD/MM/YY</span> <span class="tooltiptext">DD/MM/YY</span></p></h1>
+		<h1>
+			<a href="javascript:changeFont()" id="time">
+				<div class="spinner">
+					<div class="rect1"></div>
+					<div class="rect2"></div>
+					<div class="rect3"></div>
+					<div class="rect4"></div>
+					<div class="rect5"></div>
+				</div>
+			</a>
+			<p onclick="changeTimezoneDate()" class="icon tooltip" id="date">
+				<span id="dateContent">DD/MM/YY</span> 
+				<span class="tooltiptext">DD/MM/YY</span>
+			</p>
+		</h1>
 		
 	</div>
 	<p id="copyConfirm" class="hideText pill">Copied URL! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span></p>
@@ -69,13 +77,15 @@
 			}
 			AM_PM = false
 			CustomElements = false
+			TextColor = null
 			now = new Date()
 			CurrentHour = now.getHours()
 			CurrentMinute = now.getMinutes()
 			CurrentSecond = now.getSeconds()
+			ShowDate = true
 			SettingsOpen = false
 			const TimeUpdate = setInterval(Time, 500);
-			const DateUpdate = setInterval(UpdateDay, 1000);
+			const DateUpdate = setInterval(UpdateDay, 1500);
 			font = 0
 			// BaseURL = "https://custime.dantenl.tk"
 			// BaseURL = "http://127.0.0.1:5500/index.html"
@@ -205,6 +215,12 @@
 				Time()
 				console.log("Now showing 24 hour time format!")
 			}
+
+			const loadDate = queryString.get('date')
+			if (loadDate == "f") {
+				changeTimezoneDate()
+			}
+
 			const loadBG = queryString.get('bg')
 			if (loadBG == "r") {
 				color = "red"
@@ -333,13 +349,13 @@
 					document.getElementById("time").style.color = TextColor
 					document.getElementById("date").style.color = TextColor
 					if(tinycolor(TextColor).isLight() == true) {
-						document.getElementsByClassName("icon")[1].style.color = pSBC(-0.40, TextColor);
-						document.getElementsByClassName("icon")[2].style.color = pSBC(-0.40, TextColor);
-						document.getElementsByClassName("icon")[3].style.color = pSBC(-0.40, TextColor);
+						document.getElementsByClassName("icon")[1].style.color = TextColor
+						document.getElementsByClassName("icon")[2].style.color = TextColor
+						document.getElementsByClassName("icon")[3].style.color = TextColor
 					} else {
-						document.getElementsByClassName("icon")[1].style.color = pSBC(0.40, TextColor);
-						document.getElementsByClassName("icon")[2].style.color = pSBC(0.40, TextColor);
-						document.getElementsByClassName("icon")[3].style.color = pSBC(0.40, TextColor);
+						document.getElementsByClassName("icon")[1].style.color = TextColor
+						document.getElementsByClassName("icon")[2].style.color = TextColor
+						document.getElementsByClassName("icon")[3].style.color = TextColor
 					}
 				} else {
 					document.getElementById("copyConfirm").innerHTML = `That is not a valid hex color! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
@@ -394,6 +410,9 @@
 				}
 			}
 
+			if (ShowDate == false) {
+				Timezone()
+			}
 
 			now = new Date()
 			if (AM_PM==false) {
@@ -415,11 +434,13 @@
 
 		function UpdateDay() {
 			if (SettingsOpen == false) {
-				now = new Date()
-				thisDay = now.getDate()
-				thisMonth = now.getMonth() + 1
-				thisYear = now.getFullYear()
-				document.getElementById("dateContent").innerText = `${thisDay}-${thisMonth}-${thisYear}`
+				if (ShowDate == true) {
+					now = new Date()
+					thisDay = now.getDate()
+					thisMonth = now.getMonth() + 1
+					thisYear = now.getFullYear()
+					document.getElementById("dateContent").innerText = `${thisDay}-${thisMonth}-${thisYear}`
+				}
 			}
 		}
 
@@ -576,6 +597,12 @@
 				ShareURL_1 = "?time=24"
 			}
 
+			if (ShowDate == false) {
+				ShareURL_1plus = "&date=f"
+			} else {
+				ShareURL_1plus = "&date=t"
+			}
+
 			if (color=="red") {
 				ShareURL_2 = "&bg=r"
 			} else if (color == "yellow") {
@@ -626,7 +653,7 @@
 				ShareURL_3 = `&customfont=${CustomFontShare}`
 			}
 			// alert(`${BaseURL}${ShareURL_1}${ShareURL_2}${ShareURL_3}`)
-			copy(`${BaseURL}${ShareURL_1}${ShareURL_2}${ShareURL_3}`)
+			copy(`${BaseURL}${ShareURL_1}${ShareURL_1plus}${ShareURL_2}${ShareURL_3}`)
 		}
 
 		function settings(command) {
@@ -678,6 +705,54 @@
 			}
 		}
 
+		function changeTimezoneDate() {
+			if (ShowDate == true) {
+				ShowDate = false
+				Timezone()
+			} else {
+				ShowDate = true
+				document.getElementsByClassName("tooltiptext")[0].innerText = "DD/MM/YY"
+				UpdateDay()
+			}
+		}
+
+		function Timezone() {
+			// TimeNYC = new Date().toLocaleString('en-GB', { timeZone: "America/New_York" });
+			now = new Date()
+			TimeNYCHours = now.toLocaleString('en-GB', { timeZone: "America/New_York", hour: "2-digit" });
+			TimeNYCMinutes = now.toLocaleString('en-GB', { timeZone: "America/New_York", minute: "2-digit" });
+			if (TimeNYCMinutes <= 9) {
+				TimeNYCMinutes = `0${TimeNYCMinutes}`
+			}
+			TimeNYC = `${TimeNYCHours}:${TimeNYCMinutes}`
+
+			TimeUTCHours = now.toLocaleString('en-GB', { timeZone: "Europe/London", hour: "2-digit" });
+			TimeUTCMinutes = now.toLocaleString('en-GB', { timeZone: "Europe/London", minute: "2-digit" });
+			if (TimeUTCMinutes <= 9) {
+				TimeUTCMinutes = `0${TimeUTCMinutes}`
+			}
+			TimeUTC = `${TimeUTCHours}:${TimeUTCMinutes}`
+
+			TimeCSTHours = now.toLocaleString('en-GB', { timeZone: "Asia/Shanghai", hour: "2-digit" });
+			TimeCSTMinutes = now.toLocaleString('en-GB', { timeZone: "Asia/Shanghai", minute: "2-digit" });
+			if (TimeCSTMinutes <= 9) {
+				TimeCSTMinutes = `0${TimeCSTMinutes}`
+			}
+			TimeCST = `${TimeCSTHours}:${TimeCSTMinutes}`
+
+			document.getElementsByClassName("tooltiptext")[0].innerText = "NYC-London-Beijing"
+			
+			document.getElementById("dateContent").innerHTML = `
+			<i class="fa-solid fa-earth-americas icon" id="globe-am"></i>${TimeNYC}
+			<i class="fa-solid fa-earth-europe icon" id="globe-eu"></i>${TimeUTC}
+			<i class="fa-solid fa-earth-asia icon" id="globe-as"></i>${TimeCST}`
+			if (TextColor) {
+				document.getElementById("globe-am").style.color = TextColor
+				document.getElementById("globe-eu").style.color = TextColor
+				document.getElementById("globe-as").style.color = TextColor
+			}
+		}
+
 		function WebFontError() {
 			document.getElementById("copyConfirm").innerHTML = `Could not load custom font! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
 			document.getElementById("copyConfirm").classList.remove("hideText")
@@ -705,6 +780,8 @@
 		}
 
 		// Amazing code from Pimp Trizkit at https://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
+		// To make something 40% darker: pSBC(-0.40, Variable)
+		// And to make it 40% lighter: pSBC(0.40, Variable)
 		const pSBC = (p, c0, c1, l) => {
 			let r, g, b, P, f, t, h, i = parseInt, m = Math.round, a = typeof (c1) == "string";
 			if (typeof (p) != "number" || p < -1 || p > 1 || typeof (c0) != "string" || (c0[0] != 'r' && c0[0] != '#') || (c1 && !a)) return null;
