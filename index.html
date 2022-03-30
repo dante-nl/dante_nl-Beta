@@ -219,6 +219,10 @@
 			const loadDate = queryString.get('date')
 			if (loadDate == "f") {
 				changeTimezoneDate()
+			} else if (loadDate != "t") {
+				if (localStorage.getItem("Timezone") == "true") {
+					changeTimezoneDate()
+				}
 			}
 
 			const loadBG = queryString.get('bg')
@@ -708,10 +712,12 @@
 		function changeTimezoneDate() {
 			if (ShowDate == true) {
 				ShowDate = false
+				localStorage.setItem("Timezone", "true")
 				Timezone()
 			} else {
 				ShowDate = true
 				document.getElementsByClassName("tooltiptext")[0].innerText = "DD/MM/YY"
+				localStorage.setItem("Timezone", "false")
 				UpdateDay()
 			}
 		}
