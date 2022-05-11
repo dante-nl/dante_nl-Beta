@@ -49,11 +49,16 @@
 	<h1>
 		<div style="display:flex;justify-content:center;align-items:center;">
 			<a id="clock" href="javascript:changeTimeFormat()" class="far fa-clock fa-sm icon"></a>
+			<!-- <a id="italic" href="javascript:changeTextFormatting('italic')" class=" far fa-solid fa-italic icon"></a> -->
 
 			<a href="javascript:changeColor('red')" style="background-color: #FFADAD" class="circle"></a>
+			<a href="javascript:changeColor('orange')" style="background-color: #ffd6a5" class="circle"></a>
 			<a href="javascript:changeColor('yellow')" style="background-color: #FDFFB6" class="circle"></a>
 			<a href="javascript:changeColor('green')" style="background-color: #CAFFBF" class="circle"></a>
+			<a href="javascript:changeColor('lightblue')" style="background-color: #9bf6ff" class="circle"></a>
 			<a href="javascript:changeColor('blue')" style="background-color: #A0C4FF" class="circle"></a>
+			<a href="javascript:changeColor('purple')" style="background-color: #bdb2ff" class="circle"></a>
+			<a href="javascript:changeColor('pink')" style="background-color: #ffc6ff" class="circle"></a>
 			<a href="javascript:changeColor('white')" style="background-color: #fff" class="circle"></a>
 
 			<a id="share" href="javascript:share()" class="fas fa-share-alt fa-sm icon"></a>
@@ -229,37 +234,101 @@
 			if (loadBG == "r") {
 				color = "red"
 				document.body.classList.add("red")
+				document.body.classList.remove("orange")
 				document.body.classList.remove("yellow")
 				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
 				document.body.classList.remove("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
 				console.log("Changed style to red!")
+			} else if (loadBG == "o") {
+				color = "orange"
+				document.body.classList.remove("red")
+				document.body.classList.add("orange")
+				document.body.classList.remove("yellow")
+				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
+				document.body.classList.remove("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
+				console.log("Changed style to orange!")
 			} else if (loadBG == "y") {
 				color = "yellow"
 				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
 				document.body.classList.add("yellow")
 				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
 				document.body.classList.remove("blue")
-				console.log("Changed style to yellow!")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
+				console.log("Changed style to x!")
 			} else if (loadBG == "g") {
 				color = "green"
 				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
 				document.body.classList.remove("yellow")
 				document.body.classList.add("green")
+				document.body.classList.remove("lightblue")
 				document.body.classList.remove("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
 				console.log("Changed style to green!")
+			} else if (loadBG == "lb") {
+				color = "lightblue"
+				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
+				document.body.classList.remove("yellow")
+				document.body.classList.remove("green")
+				document.body.classList.add("lightblue")
+				document.body.classList.remove("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
+				console.log("Changed style to light blue!")
 			} else if (loadBG == "b") {
 				color = "blue"
 				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
 				document.body.classList.remove("yellow")
 				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
 				document.body.classList.add("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
 				console.log("Changed style to blue!")
+			} else if (loadBG == "pu") {
+				color = "purple"
+				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
+				document.body.classList.remove("yellow")
+				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
+				document.body.classList.remove("blue")
+				document.body.classList.add("purple")
+				document.body.classList.remove("pink")
+				console.log("Changed style to purple!")
+			} else if (loadBG == "pi") {
+				color = "pink"
+				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
+				document.body.classList.remove("yellow")
+				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
+				document.body.classList.remove("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.add("pink")
+				console.log("Changed style to pink!")
 			} else {
 				color = "white"
 				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
 				document.body.classList.remove("yellow")
 				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
 				document.body.classList.remove("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
 				console.log("Default style!")
 			}
 			const loadFont = queryString.get('font') 
@@ -352,15 +421,9 @@
 					TextColor = `#${loadTextColor}`
 					document.getElementById("time").style.color = TextColor
 					document.getElementById("date").style.color = TextColor
-					if(tinycolor(TextColor).isLight() == true) {
-						document.getElementsByClassName("icon")[1].style.color = TextColor
-						document.getElementsByClassName("icon")[2].style.color = TextColor
-						document.getElementsByClassName("icon")[3].style.color = TextColor
-					} else {
-						document.getElementsByClassName("icon")[1].style.color = TextColor
-						document.getElementsByClassName("icon")[2].style.color = TextColor
-						document.getElementsByClassName("icon")[3].style.color = TextColor
-					}
+					document.getElementsByClassName("icon")[4].style.color = TextColor
+					document.getElementsByClassName("icon")[5].style.color = TextColor
+					document.getElementsByClassName("icon")[6].style.color = TextColor
 				} else {
 					document.getElementById("copyConfirm").innerHTML = `That is not a valid hex color! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
 					document.getElementById("copyConfirm").classList.remove("hideText")
@@ -482,46 +545,122 @@
 			}
 		}
 
+		function changeTextFormatting(format_type) {
+			if (format_type == "italic") {
+				document.getElementById("time").style.fontStyle = "italic"
+				document.getElementById("date").style.fontStyle = "italic"
+			}
+			// TODO: Add an option to remove, maybe underline too?
+		}
+
 		function changeColor(LocalColor) {
 			localStorage.removeItem("bg");
 			if (LocalColor == "red") {
 				color = "red"
 				document.body.classList.add("red")
+				document.body.classList.remove("orange")
 				document.body.classList.remove("yellow")
 				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
 				document.body.classList.remove("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
 				localStorage.setItem("bg", "red")
 				console.log("Changed style to red!")
+			} else if (LocalColor == "orange") {
+				color = "orange"
+				document.body.classList.remove("red")
+				document.body.classList.add("orange")
+				document.body.classList.remove("yellow")
+				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
+				document.body.classList.remove("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
+				localStorage.setItem("bg", "orange")
+				console.log("Changed style to orange!")
 			} else if (LocalColor == "yellow") {
 				color = "yellow"
 				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
 				document.body.classList.add("yellow")
 				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
 				document.body.classList.remove("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
 				localStorage.setItem("bg", "yellow")
 				console.log("Changed style to yellow!")
 			} else if (LocalColor == "green") {
 				color = "green"
 				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
 				document.body.classList.remove("yellow")
 				document.body.classList.add("green")
+				document.body.classList.remove("lightblue")
 				document.body.classList.remove("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
 				localStorage.setItem("bg", "green")
 				console.log("Changed style to green!")
+			} else if (LocalColor == "lightblue") {
+				color = "lightblue"
+				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
+				document.body.classList.remove("yellow")
+				document.body.classList.remove("green")
+				document.body.classList.add("lightblue")
+				document.body.classList.remove("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
+				localStorage.setItem("bg", "lightblue")
+				console.log("Changed style to light blue!")
 			} else if (LocalColor == "blue") {
 				color = "blue"
 				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
 				document.body.classList.remove("yellow")
 				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
 				document.body.classList.add("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
 				localStorage.setItem("bg", "blue")
 				console.log("Changed style to blue!")
+			} else if (LocalColor == "purple") {
+				color = "purple"
+				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
+				document.body.classList.remove("yellow")
+				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
+				document.body.classList.remove("blue")
+				document.body.classList.add("purple")
+				document.body.classList.remove("pink")
+				localStorage.setItem("bg", "purple")
+				console.log("Changed style to purple!")
+			} else if (LocalColor == "pink") {
+				color = "pink"
+				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
+				document.body.classList.remove("yellow")
+				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
+				document.body.classList.remove("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.add("pink")
+				localStorage.setItem("bg", "pink")
+				console.log("Changed style to pink!")
 			} else if (LocalColor == "white") {
 				color = "white"
 				document.body.classList.remove("red")
+				document.body.classList.remove("orange")
 				document.body.classList.remove("yellow")
 				document.body.classList.remove("green")
+				document.body.classList.remove("lightblue")
 				document.body.classList.remove("blue")
+				document.body.classList.remove("purple")
+				document.body.classList.remove("pink")
 				localStorage.setItem("bg", "white")
 				console.log("Reset style!")
 			}
@@ -609,12 +748,20 @@
 
 			if (color=="red") {
 				ShareURL_2 = "&bg=r"
+			} else if (color == "orange") {
+				ShareURL_2 = "&bg=o"
 			} else if (color == "yellow") {
 				ShareURL_2 = "&bg=y"
 			} else if (color == "green") {
 				ShareURL_2 = "&bg=g"
+			} else if (color == "lightblue") {
+				ShareURL_2 = "&bg=lb"
 			} else if (color == "blue") {
 				ShareURL_2 = "&bg=b"
+			} else if (color == "purple") {
+				ShareURL_2 = "&bg=pu"
+			} else if (color == "pink") {
+				ShareURL_2 = "&bg=pi"
 			} else {
 				const queryString = new URLSearchParams(window.location.search)
 				const loadBGColor = queryString.get('bgcolor')
