@@ -1,6 +1,11 @@
 /*
 
-🄲🅄🅂🅃🄸🄼🄴
+░█████╗░██╗░░░██╗░██████╗████████╗██╗███╗░░░███╗███████╗
+██╔══██╗██║░░░██║██╔════╝╚══██╔══╝██║████╗░████║██╔════╝
+██║░░╚═╝██║░░░██║╚█████╗░░░░██║░░░██║██╔████╔██║█████╗░░
+██║░░██╗██║░░░██║░╚═══██╗░░░██║░░░██║██║╚██╔╝██║██╔══╝░░
+╚█████╔╝╚██████╔╝██████╔╝░░░██║░░░██║██║░╚═╝░██║███████╗
+░╚════╝░░╚═════╝░╚═════╝░░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝╚══════╝
 
 © 2022 dante_nl
 Custime CSS style sheet. Do not copy without permission from dante_nl
@@ -20,6 +25,9 @@ Fonts retrieved from Google Fonts:
 - Sacramento
 - IBM Plex Mono
 - Fira Code
+
+Fonts retrieved from LuckUnstoppable's CDN:
+- Barlow Black
 
 Fonts retrieved from fontslibrary.org:
 - Minecraftia
@@ -65,7 +73,7 @@ body {
 	width: 100%;
 }
 
-.clock a#time{
+.clock #time{
 	text-decoration: none;
 	color: #000;
 	font-size: 500%;
@@ -157,7 +165,23 @@ body {
 	color: #000
 }
 
+.fa-regular {
+	display: inline-block;
+  	vertical-align: middle;
+	margin: 2px;
+	text-decoration: none;
+	color: #000
+}
+
 .fas {
+	display: inline-block;
+  	vertical-align: middle;
+	margin: 2px;
+	text-decoration: none;
+	color: #000
+}
+
+.fa-solid {
 	display: inline-block;
   	vertical-align: middle;
 	margin: 2px;
@@ -188,6 +212,10 @@ body {
 	height: 34px;
 	margin-left: 10px;
   	margin-right: 10px;
+}
+
+a {
+	color: black
 }
 
 /* Hide default HTML checkbox */
@@ -278,6 +306,28 @@ input:checked + .slider:before {
 	background-color: #996868;
 }
 
+.orange {
+	background-color: #FFD6A5;
+}
+
+.orange .clock a {
+	color: #998063 !important;
+}
+
+.orange .icon {
+	color: #998063 !important;
+	text-decoration: none;
+}
+
+.orange .pill {
+	color: #FFD6A5;
+	background-color: #998063;
+}
+
+.orange .tooltip .tooltiptext {
+	color: #FFD6A5;
+	background-color: #998063;
+}
 
 
 .yellow {
@@ -349,8 +399,78 @@ input:checked + .slider:before {
 }
 
 .blue .tooltip .tooltiptext {
-	color: #A0C4FF;
+	color: #9bf6ff;
 	background-color: #607699;
+}
+
+.lightblue {
+	background-color: #9bf6ff;
+}
+
+.lightblue .clock a {
+	color: #5d9499 !important;
+}
+
+.lightblue .icon {
+	color: #5d9499 !important;
+	text-decoration: none;
+}
+
+.lightblue .pill {
+	color: #9bf6ff;
+	background-color: #5d9499;
+}
+
+.lightblue .tooltip .tooltiptext {
+	color: #9bf6ff;
+	background-color: #5d9499;
+}
+
+.purple {
+	background-color: #bdb2ff;
+}
+.purple .clock a {
+	color: #716b99 !important;
+}
+
+.purple .icon {
+	color: #716b99 !important;
+	text-decoration: none;
+}
+
+.purple .pill {
+	color: #bdb2ff;
+	background-color: #716b99;
+}
+
+.purple .tooltip .tooltiptext {
+	color: #bdb2ff;
+	background-color: #716b99;
+}
+
+
+
+.pink {
+	background-color: #ffc6ff;
+}
+
+.pink .clock a {
+	color: #997799 !important;
+}
+
+.pink .icon {
+	color: #997799 !important;
+	text-decoration: none;
+}
+
+.pink .pill {
+	color: #ffc6ff;
+	background-color: #997799;
+}
+
+.pink .tooltip .tooltiptext {
+	color: #ffc6ff;
+	background-color: #997799;
 }
 
 /* --------------- */
@@ -430,6 +550,34 @@ button {
 	background: none;
 	border: 0px solid;
 	font-size: 150%;
+}
+
+/* --------------- */
+/* ⬇️ Introduction CSS */
+/* --------------- */
+
+#overlay {
+	position: absolute;
+	display: none;
+	width: 40%;
+	height: 40%;
+	border-radius: 8px;
+	/* top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0; */
+	background-color: rgba(0,0,0,0.5);
+	z-index: 2;
+	cursor: pointer;
+}
+
+#text{
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	color: white;
+	transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
 }
 
 /* --------------- */
