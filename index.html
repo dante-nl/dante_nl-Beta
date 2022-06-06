@@ -66,9 +66,9 @@
 
 		</div>
 	</h1>
-	<div style="font-family: Arial, sans-serif; padding: 20px; background-color: #7289da; color: #fff; border-radius: 8px">
+	<!-- <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #7289da; color: #fff; border-radius: 8px">
 		<strong>Hey!</strong> Currently you're visiting a page that is being worked on! So not everything might work
-		properly! <i>This text is not part of the page, and is just directly pasted on top of it)</i>
+		properly! <i>This text is not part of the page, and is just directly pasted on top of it)</i> -->
 	<script>
 		function load() {
 			if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -421,9 +421,9 @@
 					TextColor = `#${loadTextColor}`
 					document.getElementById("time").style.color = TextColor
 					document.getElementById("date").style.color = TextColor
-					document.getElementsByClassName("icon")[4].style.color = TextColor
-					document.getElementsByClassName("icon")[5].style.color = TextColor
-					document.getElementsByClassName("icon")[6].style.color = TextColor
+					document.getElementsByClassName("icon")[0].style.color = TextColor
+					document.getElementsByClassName("icon")[1].style.color = TextColor
+					document.getElementsByClassName("icon")[2].style.color = TextColor
 				} else {
 					document.getElementById("copyConfirm").innerHTML = `That is not a valid hex color! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
 					document.getElementById("copyConfirm").classList.remove("hideText")
@@ -446,6 +446,10 @@
 					document.getElementsByClassName('circle')[2].style.display = "none"
 					document.getElementsByClassName('circle')[3].style.display = "none"
 					document.getElementsByClassName('circle')[4].style.display = "none"
+					document.getElementsByClassName('circle')[5].style.display = "none"
+					document.getElementsByClassName('circle')[6].style.display = "none"
+					document.getElementsByClassName('circle')[7].style.display = "none"
+					document.getElementsByClassName('circle')[8].style.display = "none"
 					
 				} else {
 					document.getElementById("copyConfirm").innerHTML = `That is not a valid hex color! <span class="close" onclick="this.parentElement.classList.add('hideText'); this.parentElement.classList.remove('slide-in');">&times;</span>`
