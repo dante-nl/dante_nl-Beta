@@ -29,6 +29,10 @@ This contains the juice for my website, visible at dantenl.tk
 	--main-color-b: #ede342;
 	--background-primary: #2D3047;
 
+	--color-error: #ef476f;
+	--color-warning: #ffd166;
+	--color-okay: #06d6a0;
+
 	--font-primary: 'Open Sans', sans-serif;
 	--font-details: 'Caveat', monospace;
 	--font-code: 'Source Code Pro', monospace;
@@ -78,8 +82,8 @@ a:hover {
 /* Knowing me, this will probably be the last comment in a while ;) */
 
 .content {
-	margin-left: 15%;
-	margin-right: 15%;
+	margin-left: 10%;
+	margin-right: 10%;
 }
 
 .mobile .content {
@@ -98,13 +102,18 @@ a:hover {
 	background-clip: text;
 }
 
+.grid {
+	grid-template-columns: repeat(2, 1fr);
+	display: grid;
+}
+
 .project-banner {
 	background:
 		linear-gradient(var(--background-primary), var(--background-primary)) padding-box,
 		linear-gradient(321deg, var(--main-color-b), var(--main-color-a)) border-box;
 	border-radius: 10px;
 	border: 4px solid transparent;
-	margin-bottom: 10px;
+	margin: 10px;
 }
 
 .project-banner-inside {
@@ -120,6 +129,14 @@ a:hover {
 	border-radius: 30px;
 	color: white;
 	background-color: var(--url-color);
+	font-family: var(--font-code);
+	padding: 2px 20px
+}
+
+.soon-badge {
+	border-radius: 30px;
+	color: white;
+	background-color: var(--main-color-a);
 	font-family: var(--font-code);
 	padding: 2px 20px
 }
