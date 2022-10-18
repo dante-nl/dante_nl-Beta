@@ -107,6 +107,10 @@ a:hover {
 	display: grid;
 }
 
+.mobile .grid {
+	display: block;
+}
+
 .project-banner {
 	background:
 		linear-gradient(var(--background-primary), var(--background-primary)) padding-box,
